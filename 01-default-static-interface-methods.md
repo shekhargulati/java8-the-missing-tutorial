@@ -155,7 +155,7 @@ default int remainder(int number, int divisor) {
 
 A class can extend a single class but can implement multiple interfaces. Now that it is feasible to have method implementations in interfaces Java has multiple inheritance of behavior. Java already has multiple inheritance at type level but now it also has multiple inheritance at behavior level. There are three resolution rules that helps decide which method will be picked:
 
-1. Methods declared in classes win over method defined in interfaces.
+**Rule 1: Methods declared in classes win over method defined in interfaces.**
 ```java
 interface A {
     default void doSth(){
@@ -176,7 +176,8 @@ class App implements A{
 ```
 This will print `inside App` as methods declared in class have precedence over methods declared in interfaces.
 
-1. Otherwise, the most specific interface is selected
+**Rule 2: Otherwise, the most specific interface is selected**
+
 ```java
 interface A {
     default void doSth() {
@@ -198,7 +199,8 @@ class App implements C, B, A {
 ```
 This will print `inside C`.
 
-1. Otherwise, class has to call the desired implementation explicitly
+**Rule 3: Otherwise, class has to call the desired implementation explicitly**
+
 ```java
 interface A {
     default void doSth() {
