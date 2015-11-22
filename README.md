@@ -16,7 +16,7 @@ Java 8 is not a new topic anymore. There are many good books published on it. St
 * [Completable Futures](./09-completable-futures.md): Not written yet
 * [Nashorn](./10-nashorn.md): Not written yet
 * [Tools](./11-tools.md): Not written yet
-* [Annotation improvements](./12-annotations.md): Not written yet
+* [Annotation improvements](./12-annotations.md)
 
 -----------
 You can follow me on twitter at [https://twitter.com/shekhargulati](https://twitter.com/shekhargulati) or email me at <shekhargulati84@gmail.com>. Also, you can read my blogs at [http://shekhargulati.com/](http://shekhargulati.com/)
