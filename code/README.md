@@ -1,7 +1,7 @@
 Java 8: The Missing Tutorial Supporting Code
 -----
 
-This gradle Java 8 project houses example code that is used in the tutorial.
+This gradle Java 8 project houses example code that is used in the tutorial. Please refer to Table of Content to go to their respective packages inside the Java project.
 
 ## Table of Contents
 
