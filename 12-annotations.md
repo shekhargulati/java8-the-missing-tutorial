@@ -1,7 +1,7 @@
 Annotation Improvements
 -------
 
-There are few improvements made in the annotation mechanism in Java 8. These are:
+There are couple of improvements made in the annotation mechanism in Java 8. These are:
 
 1. Repeatable annotations
 2. Type annotations
