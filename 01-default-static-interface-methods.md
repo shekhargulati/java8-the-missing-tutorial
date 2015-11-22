@@ -3,7 +3,7 @@ Default and Static Methods for Interfaces
 
 We all understand that we should code to interfaces. Interfaces give client a contract which they should use without relying on the implementation details(i.e. classes). Hence, promoting **[loose coupling](https://en.wikipedia.org/wiki/Loose_coupling)**. Designing clean interfaces is one of the most important aspect of API design. One of the SOLID principle **[Interface segregation](https://en.wikipedia.org/wiki/Interface_segregation_principle)** talks about designing smaller client-specific interfaces instead of designing one general purpose interface. Interface design is the key to clean and effective API's for your libraries and applications.
 
-> Code for this section is inside [ch01 package](https://github.com/shekhargulati/java8-the-missing-tutorial/tree/master/code/src/main/java/com/shekhargulati/java8_tutorial/ch01). 
+> Code for this section is inside [ch01 package](https://github.com/shekhargulati/java8-the-missing-tutorial/tree/master/code/src/main/java/com/shekhargulati/java8_tutorial/ch01).
 
 If you have designed any API then with time you would have felt the need to add new methods to the API. Once API is published it becomes impossible to add methods to an interface without breaking existing implementations. To make this point clear, let's suppose you are building a simple `Calculator` API that supports `add`,`subtract`, `divide`, and `multiply` operations. We can write `Calculator` interface as shown below. ***To keep things simple we will use int.***
 
@@ -84,7 +84,7 @@ public abstract class CalculatorFactory {
 
 Now, users will be forced to code to `Calculator` interface and they will not have access to implementations.
 
-Although we have achieved our goal but we have increased the circumference area of our API by adding a new class `CalculatorFactory`. Now users of the API have to learn about one more class before they can use the API effectively. This was the only solution available before Java 8.
+Although we have achieved our goal but we have increased the surface area of our API by adding a new class `CalculatorFactory`. Now users of the API have to learn about one more class before they can use the API effectively. This was the only solution available before Java 8.
 
 **Java 8 allows you to declare static methods inside an interface**. This will allow API designers to define static utility methods like `getInstance` in the interface itself. Hence keeping API short and lean. The static methods inside an interface could be used to replace static helper classes(`CalculatorFactory`) that we normally create to define helper methods associated with a type. For example, `Collections` class is a helper class that defines various helper methods to work with Collection and associated interfaces. The methods define in `Collections` class could easily be added to `Collection` or its child interface.
 
