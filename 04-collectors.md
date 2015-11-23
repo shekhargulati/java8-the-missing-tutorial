@@ -327,3 +327,20 @@ public class MultisetCollectorExample {
     }
 }
 ```
+
+## Word Count in Java 8
+
+We will end this section by writing famous word count example in Java 8 using Streams and Collectors.
+
+```java
+public static void wordCount(Path path) throws IOException {
+    Map<String, Long> wordCount = Files.lines(path)
+            .parallel()
+            .flatMap(line -> Arrays.stream(line.trim().split("\\s")))
+            .map(word -> word.replaceAll("[^a-zA-Z]", "").toLowerCase().trim())
+            .filter(word -> word.length() > 0)
+            .map(word -> new SimpleEntry<>(word, 1))
+            .collect(groupingBy(SimpleEntry::getKey, counting()));
+    wordCount.forEach((k, v) -> System.out.println(String.format("%s ==>> %d", k, v)));
+}
+```
