@@ -1,17 +1,21 @@
-## Streams
+Streams
+------
 
-On [day 1](http://shekhargulati.com/2015/07/25/day-1-lets-learn-about-lambdas/), we learnt how lambdas can help us write clean concise code by allowing us to pass behavior without the need to create a class. Lambdas is a very simple language construct that helps developer express their intent on the fly by using functional interfaces. The real power of lambdas can be experienced when an API is designed keeping lambdas in mind i.e. a fluent API that makes use of Functional interfaces(we discussed them on day 1).
+In [chapter 2](./02-lambdas.md), we learnt how lambdas can help us write clean concise code by allowing us to pass behavior without the need to create a class. Lambdas is a very simple language construct that helps developer express their intent on the fly by using functional interfaces. The real power of lambdas can be experienced when an API is designed keeping lambdas in mind i.e. a fluent API that makes use of Functional interfaces (we discussed them in [lambdas chapter](./02-lambdas.md#do-i-need-to-write-my-own-functional-interfaces)).
 
-One such API that makes heavy use of lambdas is Stream API introduced in JDK 8. Streams provide a higher level abstraction to express computations on Java collections in a declarative way similar to how SQL helps you declaratively query data in the database. Declarative means developers write what they want to do rather than how it should be done. Almost every Java developer has used `Collection` API for storing, accessing, and manipulating data. In this blog, we will discuss why need a new API, difference between Collection and Stream, and how to use Stream API in your applications.
+One such API that makes heavy use of lambdas is Stream API introduced in JDK 8. Streams provide a higher level abstraction to express computations on Java collections in a declarative way similar to how SQL helps you declaratively query data in the database. Declarative means developers write what they want to do rather than how it should be done. In this chapter, we will discuss why need a new data processing API, difference between Collection and Stream, and how to use Stream API in your applications.
+
+> Code for this section is inside [ch03 package](https://github.com/shekhargulati/java8-the-missing-tutorial/tree/master/code/src/main/java/com/shekhargulati/java8_tutorial/ch03).
 
 ## Why we need a new data processing abstraction?
 
-1. Collection API is too low level: Collection API does not provide higher level constructs to query the data so developers are forced to write a lot of boilerplate code for the most trivial task.
+In  my opinion, there are two reasons:
 
-2. Limited language support to process Collections in parallel
+1. Collection API does not provide higher level constructs to query the data so developers are forced to write a lot of boilerplate code for the most trivial task.
 
+2. It has limited language support to process Collection data in parallel. It is left to the developer to use Java language concurrency constructs and process data effectively and efficiently in parallel.
 
-### Data processing before Java 8
+## Data processing before Java 8
 
 Look at the code shown below and try to predict what code does.
 
@@ -42,25 +46,28 @@ public class Example1_Java7 {
 
 The code shown above prints all the reading task titles sorted by their title length. All Java developers write this kind of code everyday. To write such a simple program we had to write 15 lines of Java code. The bigger problem with the above mentioned code is not the number of lines a developer has to write but, it misses the developer's intent i.e. filtering reading tasks, sorting by title length, and transforming to List of String.
 
-### Data processing in Java 8
+## Data processing in Java 8
 
-The above mentioned code can be simplified using Java 8 streams as shown below.
+The above mentioned code can be simplified using Java 8 streams API as shown below.
 
 ```java
 public class Example1_Stream {
+
     public static void main(String[] args) {
         List<Task> tasks = getTasks();
+
         List<String> readingTasks = tasks.stream()
                 .filter(task -> task.getType() == TaskType.READING)
                 .sorted((t1, t2) -> t1.getTitle().length() - t2.getTitle().length())
                 .map(Task::getTitle)
                 .collect(Collectors.toList());
+
         readingTasks.forEach(System.out::println);
     }
 }
 ```
 
-The line `tasks.stream().filter(task ->task.getType() == TaskType.READING).sorted((t1, t2) -> t1.getTitle().length() - t2.getTitle().length()).map(Task::getTitle).collect(Collectors.toList())` constructs a stream pipeline composing of multiple stream operations as discussed below.
+The code shown above constructs a pipeline composing of multiple stream operations as discussed below.
 
 * **stream()** - You created a stream pipeline by invoking the `stream()` method on the source collection i.e. `tasks` `List<Task>`.
 
@@ -76,14 +83,17 @@ The line `tasks.stream().filter(task ->task.getType() == TaskType.READING).sorte
 
 In my opinion Java 8 code is better because of following reasons:
 
-1. Java 8 code clearly reflect developer intent
-2. Developer expressed what they want to do rather than how they want do it
-3. Stream API provides a unified language for data processing
-4. No boilerplate code
+1. Java 8 code clearly reflect developer intent of filtering, sorting, etc.
 
-### What is a Stream?
+2. Developers express what they want to do rather than how they want do it by using higher level functions like filter, map, etc.
 
-Stream is a sequence of elements where elements are computed on demand. Streams are lazy by nature and they are only computed when accessed. This allows us to produce infinite streams. In Java before version 8, there was no way to produce infinite elements. With Java 8, you can very easily write a Stream that will produce infinite unique identifiers as shown below.
+3. Stream API provides a unified language for data processing. Now developers will have the common vocabulary when they are talking about data processing. When two developers talk about `filter` function you can be sure that they both are applying a data filtering operation.
+
+4. No boilerplate code required to express data processing. Developers now don't have to write explicit for loops or create temporary collections to store data. All is taken care by the Stream API itself.
+
+## What is a Stream?
+
+Stream is an abstract view over some data. For example, Stream can be a view over a list or lines in a file or any other sequence of elements. Stream API provides aggregate operations that can be performed sequentially or in parallel. Streams are lazy by nature and they are only computed when accessed. This allows us to produce infinite streams of data. In Java 8, you can very easily write a Stream that will produce infinite unique identifiers as shown below.
 
 ```
 public static void main(String[] args) {
@@ -91,7 +101,13 @@ public static void main(String[] args) {
 }
 ```
 
-The code shown above will create a Stream that can produce infinite UUID's. If you run this program nothing will happen as Streams are lazy and until they are accessed nothing will be computed. If we update the program to the one shown below we will see UUID printing to the console. The program will never terminate.
+There are various static factory methods like `of`, `generate`, and `iterate` in the Stream interface that one can use to create Stream instances. The `generate` method shown above takes a `Supplier`. `Supplier` is a functional interface to describe a function that does not take any input and produce a value. We passed the `generate` method a supplier that when invoked generates a unique identifier.
+
+```java
+Supplier<String> uuids = () -> UUID.randomUUID().toString()
+```
+
+If you run this program nothing will happen as Streams are lazy and until they are accessed nothing will be computed. If we update the program to the one shown below we will see UUID printing to the console. The program will never terminate.
 
 ```java
 public static void main(String[] args) {
@@ -439,9 +455,42 @@ Arrays.stream(tags, 1, 3).map(String::toUpperCase).forEach(System.out::println);
 
 ### Parallel Streams
 
-One advantage that you get by using Stream abstraction is that now library can effectively manage parallelism as iteration is internal. So, to process a stream in parallel it is as easy as shown below.
+One advantage that you get by using Stream abstraction is that now library can effectively manage parallelism as iteration is internal. You can make a stream parallel by calling `parallel` method on it. The `parallel` method underneath uses the fork-join API introduced in JDK 7. By default, it will spawn up threads equal to number of CPU in your machine. In the code show below, we are grouping numbers by thread that processed them. You will learn about `collect` and `groupingBy` functions in chapter 4. For now just understand that they allow you to group elements based on a key.
+
+```java
+public class ParallelStreamExample {
+
+    public static void main(String[] args) {
+        Map<String, List<Integer>> numbersPerThread = IntStream.rangeClosed(1, 160)
+                .parallel()
+                .boxed()
+                .collect(groupingBy(i -> Thread.currentThread().getName()));
+
+        numbersPerThread.forEach((k, v) -> System.out.println(String.format("%s >> %s", k, v)));
+    }
+}
+```
+
+The output of the above program on my machine looks like as shown below.
+
+```
+ForkJoinPool.commonPool-worker-7 >> [46, 47, 48, 49, 50]
+ForkJoinPool.commonPool-worker-1 >> [41, 42, 43, 44, 45, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130]
+ForkJoinPool.commonPool-worker-2 >> [146, 147, 148, 149, 150]
+main >> [106, 107, 108, 109, 110]
+ForkJoinPool.commonPool-worker-5 >> [71, 72, 73, 74, 75]
+ForkJoinPool.commonPool-worker-6 >> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160]
+ForkJoinPool.commonPool-worker-3 >> [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 76, 77, 78, 79, 80]
+ForkJoinPool.commonPool-worker-4 >> [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145]
+```
+
+Not every thread process same number of elements. You can control the size of fork join thread pool by setting a system property `System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "2")`
+
+Another example where you can use `parallel` operation is when you are processing a list of URLs as shown below.
 
 ```java
 String[] urls = {"https://www.google.co.in/", "https://twitter.com/", "http://www.facebook.com/"};
 Arrays.stream(urls).parallel().map(url -> getUrlContent(url)).forEach(System.out::println);
 ```
+
+If you need to understand when to use Parallel Stream I would recommend you read this article by Doug Lea and few other Java folks [http://gee.cs.oswego.edu/dl/html/StreamParallelGuidance.html](http://gee.cs.oswego.edu/dl/html/StreamParallelGuidance.html) to gain better understanding.
