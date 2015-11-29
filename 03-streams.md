@@ -176,7 +176,7 @@ Intermediate operations allows you to build the pipeline which gets executed whe
 
 <a href="https://whyjava.files.wordpress.com/2015/07/stream-api.png"><img class="aligncenter size-full wp-image-2983" src="https://whyjava.files.wordpress.com/2015/07/stream-api.png" alt="stream-api" height="450" /></a>
 
-## Example domain
+### Example domain
 
 Throughout this tutorial we will use Task management domain to explain the concepts. Our example domain has one class called Task -- a task to be performed by user. The class is shown below.
 
@@ -214,7 +214,7 @@ List<Task> tasks = Arrays.asList(task1, task2, task3, task4, task5);
 
 > We will not discuss about Java 8 Date Time API in this chapter. For now, just think of as the fluent API to work with dates.
 
-### Example 1 -- Find all reading task titles sorted by their creation date
+### Example 1: Find all reading task titles sorted by their creation date
 
 The first example that we will discuss is to find all the reading task titles sorted by creation date. The operations that we need to perform are:
 
@@ -275,7 +275,7 @@ public List<String> allReadingTasksSortedByCreatedOnDesc(List<Task> tasks) {
 }
 ```
 
-### Example 2 -- Find distinct tasks
+### Example 2: Find distinct tasks
 
 Suppose, we have a dataset which contains duplicate tasks. We can very easily remove the duplicates and get only distinct elements by using the `distinct` method on the stream as shown below.
 
@@ -287,7 +287,7 @@ public List<Task> allDistinctTasks(List<Task> tasks) {
 
 The `distinct()` method converts one stream into another without duplicates. It uses the Object's `equals` method for determining the object equality. According to Object's equal method contract, when two objects are equal, they are considered duplicates and will be removed from the resulting stream.
 
-### Example 3 -- Find top 5 reading tasks sorted by creation date
+### Example 3: Find top 5 reading tasks sorted by creation date
 
 The `limit` function can be used to limit the result set to a given size. `limit` is a short circuiting operation which means it does not evaluate all the elements to find the result.
 
@@ -344,7 +344,7 @@ private static List<String> allDistinctTags(List<Task> tasks) {
 }
 ```
 
-### Example 6 -- Check if all reading tasks have tag `books`
+### Example 6: Check if all reading tasks have tag `books`
 
 Stream API has methods that allows the users to check if elements in the dataset match a given property. These methods are `allMatch`, `anyMatch`, `noneMatch`, `findFirst`, and `findAny`. To check if all reading titles have a tag with name `books` we can write code as shown below.
 
@@ -366,7 +366,7 @@ public boolean isAnyReadingTasksWithTagJava8(List<Task> tasks) {
 }
 ```
 
-### Example 7 -- Creating a summary of all titles
+### Example 7: Creating a summary of all titles
 
 Suppose, you want to create a summary of all the titles then you can use `reduce` operation, which reduces the stream to a value. The `reduce` function takes a lambda which joins elements of the stream.
 
@@ -379,7 +379,7 @@ public String joinAllTaskTitles(List<Task> tasks) {
 }
 ```
 
-### Example 8 - Working with primitive Streams
+### Example 8: Working with primitive Streams
 
 Apart from the generic stream that works over objects, Java 8 also provides specific streams that work over primitive types like int, long, and double. Let's look at few examples of primitive streams.
 
@@ -412,9 +412,10 @@ We can limit the resulting stream by using the `limit` operation as shown below.
 infiniteStream.filter(el -> el % 2 == 0).limit(100).forEach(System.out::println);
 ```
 
-### Creating Streams from Arrays
+### Example 9: Creating Streams from Arrays
 
 You can create streams from arrays by using the static `stream` method on the `Arrays` class as shown below.
+
 ```java
 String[] tags = {"java", "git", "lambdas", "machine-learning"};
 Arrays.stream(tags).map(String::toUpperCase).forEach(System.out::println);
