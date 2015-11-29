@@ -85,15 +85,17 @@ In my opinion Java 8 code is better because of following reasons:
 
 1. Java 8 code clearly reflect developer intent of filtering, sorting, etc.
 
-2. Developers express what they want to do rather than how they want do it by using higher level functions like filter, map, etc.
+2. Developers express what they want to do rather than how they want do it by using a higher level abstraction in the form of Stream API.
 
 3. Stream API provides a unified language for data processing. Now developers will have the common vocabulary when they are talking about data processing. When two developers talk about `filter` function you can be sure that they both are applying a data filtering operation.
 
 4. No boilerplate code required to express data processing. Developers now don't have to write explicit for loops or create temporary collections to store data. All is taken care by the Stream API itself.
 
+5. Streams does not modify your underlying collection. They are non mutating.
+
 ## What is a Stream?
 
-Stream is an abstract view over some data. For example, Stream can be a view over a list or lines in a file or any other sequence of elements. Stream API provides aggregate operations that can be performed sequentially or in parallel. Streams are lazy by nature and they are only computed when accessed. This allows us to produce infinite streams of data. In Java 8, you can very easily write a Stream that will produce infinite unique identifiers as shown below.
+Stream is an abstract view over some data. For example, Stream can be a view over a list or lines in a file or any other sequence of elements. Stream API provides aggregate operations that can be performed sequentially or in parallel. ***One thing that developers should keep in mind is that Stream is an higher level abstraction not a data structure. Stream does not store your data.*** Streams are **lazy** by nature and they are only computed when accessed. This allows us to produce infinite streams of data. In Java 8, you can very easily write a Stream that will produce infinite unique identifiers as shown below.
 
 ```
 public static void main(String[] args) {
