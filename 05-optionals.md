@@ -1,6 +1,7 @@
-## Optionals
+Optionals
+----
 
-Every Java developer whether beginner, novice, or seasoned has in his/her lifetime experienced `NullPointerException`. This is a true fact that no Java developer can deny. We all have wasted or spent many hours trying to fix bugs caused by `NullPointerException`. According to `NullPointerException` JavaDoc, ***NullPointerException is thrown when an application attempts to use null in a case where an object is required.***. This means if we invoke a method or try to access a property on ***null*** reference then our code will explode and `NullPointerException` is thrown.
+Every Java developer whether beginner, novice, or seasoned has in his/her lifetime experienced `NullPointerException`. This is a true fact that no Java developer can deny. We all have wasted or spent many hours trying to fix bugs caused by `NullPointerException`. According to `NullPointerException` JavaDoc, ***NullPointerException is thrown when an application attempts to use null in a case where an object is required.***. This means if we invoke a method or try to access a property on ***null*** reference then our code will explode and `NullPointerException` is thrown. In this chapter, you will learn how to write null free code using Java 8 `Optional`.
 
 > On a lighter note, if you look at the JavaDoc of NullPointerException you will find that author of this exception is ***unascribed***. If the author is unknown unascribed is used(nobody wants to take ownership of NullPointerException ;))
 
@@ -13,6 +14,8 @@ Most of the programming languages like C, C++, C#, Java, Scala, etc. has nullabl
 ## Why null references are a bad thing?
 
 Let's look at the example Task management domain classes shown below. Our domain model is very simple with only two classes -- Task and User. A task can be assigned to a user.  
+
+> Code for this section is inside [ch05 package](https://github.com/shekhargulati/java8-the-missing-tutorial/tree/master/code/src/main/java/com/shekhargulati/java8_tutorial/ch05).
 
 ```java
 public class Task {
@@ -53,7 +56,7 @@ public class Task {
 public class User {
 
     private final String username;
-    private String fullname;
+    private String address;
 
     public User(String username) {
         this.username = username;
@@ -63,12 +66,12 @@ public class User {
         return username;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getAddress() {
+        return address;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
 ```
@@ -139,53 +142,62 @@ Let's update our domain model to reflect optional values.
 
 ```java
 import java.util.Optional;
-import java.util.UUID;
 
 public class Task {
-    private final String id;
     private final String title;
-    private final TaskType type;
-    private Optional<User> assignedTo;
+    private final Optional<User> assignedTo;
+    private final String id;
 
-    public Task(String title, TaskType type) {
-        this.id = UUID.randomUUID().toString();
+    public Task(String id, String title) {
+        this.id = id;
         this.title = title;
-        this.type = type;
-        this.assignedTo = Optional.empty();
+        assignedTo = Optional.empty();
+    }
+
+    public Task(String id, String title, User assignedTo) {
+        this.id = id;
+        this.title = title;
+        this.assignedTo = Optional.ofNullable(assignedTo);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public Optional<User> getAssignedTo() {
         return assignedTo;
     }
-
-    public void setAssignedTo(User assignedTo) {
-        this.assignedTo = Optional.of(assignedTo);
-    }
 }
+
+import java.util.Optional;
 
 public class User {
 
     private final String username;
-    private Optional<String> fullname;
+    private final Optional<String> address;
 
     public User(String username) {
         this.username = username;
-        this.fullname = Optional.empty();
+        this.address = Optional.empty();
+    }
+
+    public User(String username, String address) {
+        this.username = username;
+        this.address = Optional.ofNullable(address);
     }
 
     public String getUsername() {
         return username;
     }
 
-    public Optional<String> getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = Optional.of(fullname);
+    public Optional<String> getAddress() {
+        return address;
     }
 }
-
 ```
 
 Use of `Optional` data type in the data model makes it explicit that `Task` refers to an ***Optional<User>*** and ***User*** has an **Optional<String>** username. Now whoever tries to work with `assignedTo` User would know that it might not be present and they can handle it in a declarative way. We will talk about `Optional.empty` and `Optional.of` methods in the next section.
@@ -196,7 +208,7 @@ In the domain model shown above, we used couple of creational methods of the Opt
 
 * **Optional.empty**: This is used to create an Optional when value is not present like we did above `this.assignedTo = Optional.empty();` in the constructor.
 
-* **Optional.of(T value)**: This is used to create an Optional from a non-null value. It throws `NullPointerException` when value is null. We used it in the code shown above `this.fullname = Optional.of(fullname);`.
+* **Optional.of(T value)**: This is used to create an Optional from a non-null value. It throws `NullPointerException` when value is null. We used it in the code shown above `this.address = Optional.of(address);`.
 
 * **Optional.ofNullable(T value)**: This static factory method works for both null and non-null values. For null values it will create an empty Optional and for non-null value it will create Optional using the value.
 
@@ -220,7 +232,7 @@ public class TaskRepository {
 
 ## Using Optional values
 
-Optional can be thought as a Stream with one element. It has methods similar to Stream API like map, filter, flatmap that we can use to work with values contained in the `Optional`.
+Optional can be thought as a Stream with one element. It has methods similar to Stream API like map, filter, flatMap that we can use to work with values contained in the `Optional`.
 
 ### Getting title for a Task
 
