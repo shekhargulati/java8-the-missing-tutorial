@@ -1,9 +1,7 @@
 Date Time API
 -------
 
-So far in this [series](http://shekhargulati.com/7-days-with-java-8/) we have focussed on [functional](http://shekhargulati.com/2015/07/25/day-1-lets-learn-about-lambdas/) [aspects](http://shekhargulati.com/2015/07/26/day-2-lets-learn-about-streams/) of Java 8 and looked at how to design better API's using [Optional](http://shekhargulati.com/2015/07/28/day-4-lets-write-null-free-java-code/)  and [default and static methods in Interfaces](http://shekhargulati.com/2015/08/22/day-5-default-and-static-interface-methods-in-java-8/). In this blog, we will learn about another new API that will change the way we work with dates -- Date Time API. Almost all Java developers will agree that date and time support prior to Java 8 is far from ideal and most of the time we had to use third party libraries like [Joda-Time](http://www.joda.org/joda-time/) in our applications. The new Date Time API is heavily influenced by Joda-Time API and if you have used it then you will feel home.
-
-<!--more-->
+So far in this [book](https://github.com/shekhargulati/java8-the-missing-tutorial) we have focussed on [functional](./02-lambdas.md) [aspects](03-streams.md) of Java 8 and looked at how to design better API's using [Optional](05-optionals.md)  and [default and static methods in Interfaces](./01-default-static-interface-methods.md). In this chapter, we will learn about another new API that will change the way we work with dates -- Date Time API. Almost all Java developers will agree that date and time support prior to Java 8 is far from ideal and most of the time we had to use third party libraries like [Joda-Time](http://www.joda.org/joda-time/) in our applications. The new Date Time API is heavily influenced by Joda-Time API and if you have used it then you will feel home.
 
 ## What's wrong with existing Date API?
 
@@ -99,7 +97,7 @@ LocalDate march_31st = LocalDate.ofYearDay(2015, 90);
 System.out.println(march_31st); // 2015-03-31
 ```
 
-The `ofEpochDay` creates LocalDate instance using the epoch day count. The starting value of is `1970-01-01`. So, `LocalDate.ofEpochDay(1)` will give `1970-01-02`.
+The `ofEpochDay` creates LocalDate instance using the epoch day count. The starting value of epoch is `1970-01-01`. So, `LocalDate.ofEpochDay(1)` will give `1970-01-02`.
 
 LocalDate instance provide many accessor methods to access different fields like year, month, dayOfWeek, etc.
 
