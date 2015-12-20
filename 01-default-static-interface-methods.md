@@ -65,6 +65,7 @@ int difference = cal.subtract(3, 2);
 Oh no!! Users of the API are not coding to `Calculator` interface instead they are coding to implementation. Your API didn't enforced users to code to interfaces as the `BasicCalculator` class was public. If you make `BasicCalculator` package protected then you would have to provide a static factory class that will take care of providing the `Calculator` implementation. Let's improve the code to handle this.
 
 First, we will make `BasicCalculator` package protected so that users can't access the class directly.
+
 ```java
 class BasicCalculator implements Calculator {
   // rest remains same
@@ -82,11 +83,11 @@ public abstract class CalculatorFactory {
 }
 ```
 
-Now, users will be forced to code to `Calculator` interface and they will not have access to implementations.
+Now, users will be forced to code to `Calculator` interface and they will not have access to implementation details.
 
 Although we have achieved our goal but we have increased the surface area of our API by adding a new class `CalculatorFactory`. Now users of the API have to learn about one more class before they can use the API effectively. This was the only solution available before Java 8.
 
-**Java 8 allows you to declare static methods inside an interface**. This will allow API designers to define static utility methods like `getInstance` in the interface itself. Hence keeping API short and lean. The static methods inside an interface could be used to replace static helper classes(`CalculatorFactory`) that we normally create to define helper methods associated with a type. For example, `Collections` class is a helper class that defines various helper methods to work with Collection and associated interfaces. The methods define in `Collections` class could easily be added to `Collection` or its child interface.
+**Java 8 allows you to declare static methods inside an interface**. This will allow API designers to define static utility methods like `getInstance` in the interface itself. Hence keeping API short and lean. The static methods inside an interface could be used to replace static helper classes(`CalculatorFactory`) that we normally create to define helper methods associated with a type. For example, `Collections` class is a helper class that defines various helper methods to work with Collection and associated interfaces. The methods defined in `Collections` class could easily be added to `Collection` or any of its child interface.
 
 The above code can be improved in Java 8 by adding a static `getInstance` method in the `Calculator` interface itself.
 
@@ -131,7 +132,7 @@ public interface Calculator {
 }
 ```
 
-Adding a method to an interface broke the source compatibility of the API. This means users who were implementing `Calculator` interface would have to add implementation for `remainder` method otherwise their code will not compile. This is a big problem for API designers as it makes difficult to evolve API. Prior to Java 8, it was not possible to have method implementations inside interfaces. This often becomes a problem when it was required to extend an API i.e. adding one or more methods to the interface definition.  
+Adding a method to an interface broke the source compatibility of the API. This means users who were implementing `Calculator` interface would have to add implementation for `remainder` method otherwise their code will not compile. This is a big problem for API designers as it makes API difficult to evolve. Prior to Java 8, it was not possible to have method implementations inside interfaces. This often becomes a problem when it was required to extend an API i.e. adding one or more methods to the interface definition.  
 
 To allow API's to evolve with time, Java 8 allows users to provide default implementations to methods defined in the interface. These are called **default** or **defender** methods. The class implementing the interface is not required to provide implementation of these methods. If implementing class provides the implementation then implementing class method implementation will be used else default implementation will be used. `List` interface has few default methods defined like `replaceAll`, `sort`, and `splitIterator`.
 
@@ -155,9 +156,10 @@ default int remainder(int number, int divisor) {
 
 ## Multiple inheritance
 
-A class can extend a single class but can implement multiple interfaces. Now that it is feasible to have method implementations in interfaces Java has multiple inheritance of behavior. Java already has multiple inheritance at type level but now it also has multiple inheritance at behavior level. There are three resolution rules that helps decide which method will be picked:
+A class can extend a single class but can implement multiple interfaces. Now that it is feasible to have method implementation in interfaces Java has multiple inheritance of behavior. Java already had multiple inheritance at type level but now it also has multiple inheritance at behavior level. There are three resolution rules that helps decide which method will be picked:
 
 **Rule 1: Methods declared in classes win over method defined in interfaces.**
+
 ```java
 interface A {
     default void doSth(){
@@ -176,6 +178,7 @@ class App implements A{
     }
 }
 ```
+
 This will print `inside App` as methods declared in class have precedence over methods declared in interfaces.
 
 **Rule 2: Otherwise, the most specific interface is selected**
@@ -199,6 +202,7 @@ class App implements C, B, A {
     }
 }
 ```
+
 This will print `inside C`.
 
 **Rule 3: Otherwise, class has to call the desired implementation explicitly**
