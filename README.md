@@ -14,7 +14,7 @@ Java 8 is not a new topic anymore. There are many good books published on it. St
 * [Building functional programs](./07-building-functional-programs.md): Not written yet
 * [Date Time API](./08-date-time-api.md)
 * [Completable Futures](./09-completable-futures.md): Not written yet
-* [Nashorn](./10-nashorn.md): Not written yet
+* [Nashorn](./10-nashorn.md)
 * [Tools](./11-tools.md): Not written yet
 * [Annotation improvements](./12-annotations.md)
 
