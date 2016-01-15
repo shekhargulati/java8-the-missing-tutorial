@@ -156,7 +156,7 @@ default int remainder(int number, int divisor) {
 
 ## Multiple inheritance
 
-A class can extend a single class but can implement multiple interfaces. Now that it is feasible to have method implementation in interfaces Java has multiple inheritance of behavior. Java already had multiple inheritance at type level but now it also has multiple inheritance at behavior level. There are three resolution rules that helps decide which method will be picked:
+A class can extend a single class but can implement multiple interfaces. Now that it is feasible to have method implementation in interfaces Java has multiple inheritance of behavior. Java already had multiple inheritance at type level but now it also has multiple inheritance at behavior level. There are three resolution rules that help decide which method will be picked:
 
 **Rule 1: Methods declared in classes win over method defined in interfaces.**
 
