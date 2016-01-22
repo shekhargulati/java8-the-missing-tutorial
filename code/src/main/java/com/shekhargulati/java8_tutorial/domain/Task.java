@@ -1,18 +1,24 @@
 package com.shekhargulati.java8_tutorial.domain;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Task {
 
+    private final String id;
     private final String title;
     private final String description;
     private final TaskType type;
     private LocalDate createdOn;
     private Set<String> tags = new HashSet<>();
+
+    public Task(final String id, final String title, final TaskType type) {
+        this.id = id;
+        this.title = title;
+        this.description = title;
+        this.type = type;
+        this.createdOn = LocalDate.now();
+    }
 
     public Task(final String title, final TaskType type) {
         this(title, title, type, LocalDate.now());
@@ -23,10 +29,15 @@ public class Task {
     }
 
     public Task(final String title, final String description, final TaskType type, final LocalDate createdOn) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.type = type;
         this.createdOn = createdOn;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {

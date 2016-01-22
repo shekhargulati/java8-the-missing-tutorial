@@ -12,8 +12,4 @@ public class MapExample {
         return Stream.of(entries).collect(toMap(SimpleEntry::getKey, SimpleEntry::getValue));
     }
 
-    public static <T, U> void doSth(Map<T, U> map) {
-
-
-    }
 }

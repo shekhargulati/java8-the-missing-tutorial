@@ -337,3 +337,6 @@ Caused by: java.lang.ClassNotFoundException: java.util.HashMap
 	at jdk.nashorn.internal.runtime.ScriptFunction.invoke(ScriptFunction.java:228)
 	at jdk.nashorn.internal.runtime.ScriptRuntime.apply(ScriptRuntime.java:393)
 ```
+
+
+[![Analytics](https://ga-beacon.appspot.com/UA-59411913-3/shekhargulati/java8-the-missing-tutorial)](https://github.com/igrigorik/ga-beacon)
