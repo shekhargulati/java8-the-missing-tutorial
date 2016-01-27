@@ -472,4 +472,4 @@ Arrays.stream(urls).parallel().map(url -> getUrlContent(url)).forEach(System.out
 If you need to understand when to use Parallel Stream I would recommend you read this article by Doug Lea and few other Java folks [http://gee.cs.oswego.edu/dl/html/StreamParallelGuidance.html](http://gee.cs.oswego.edu/dl/html/StreamParallelGuidance.html) to gain better understanding.
 
 
-[![Analytics](https://ga-beacon.appspot.com/UA-59411913-3/shekhargulati/java8-the-missing-tutorial)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-59411913-3/shekhargulati/java8-the-missing-tutorial/03-streams)](https://github.com/igrigorik/ga-beacon)
