@@ -198,7 +198,7 @@ Predicate<String> namesStartingWithS = name -> name.startsWith("s");
 
 ### java.util.function.Consumer<T>
 
-This functional interface is used for performing actions which does not produce any output. Predicate interface has one method called `accept` which takes a value of type `T` and return nothing i.e. it is void. For example, sending an email with given message.
+This functional interface is used for performing actions which does not produce any output. Consumer interface has one method called `accept` which takes a value of type `T` and return nothing i.e. it is void. For example, sending an email with given message.
 
 ```java
 Consumer<String> messageConsumer = message -> System.out.println(message);
