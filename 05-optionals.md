@@ -200,7 +200,7 @@ public class User {
 }
 ```
 
-Use of `Optional` data type in the data model makes it explicit that `Task` refers to an ***Optional<User>*** and ***User*** has an **Optional<String>** username. Now whoever tries to work with `assignedTo` User would know that it might not be present and they can handle it in a declarative way. We will talk about `Optional.empty` and `Optional.of` methods in the next section.
+Use of `Optional` data type in the data model makes it explicit that `Task` refers to an ***Optional<User>*** and ***User*** has an **Optional<String>** address. Now whoever tries to work with `assignedTo` User would know that it might not be present and they can handle it in a declarative way. We will talk about `Optional.empty` and `Optional.of` methods in the next section.
 
 ## Working with creational methods in the java.util.Optional API
 
