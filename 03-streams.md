@@ -1,23 +1,23 @@
 Streams
 ------
 
-In [chapter 2](./02-lambdas.md), we learnt how lambdas can help us write clean concise code by allowing us to pass behavior without the need to create a class. Lambdas is a very simple language construct that helps developer express their intent on the fly by using functional interfaces. The real power of lambdas can be experienced when an API is designed keeping lambdas in mind i.e. a fluent API that makes use of Functional interfaces (we discussed them in [lambdas chapter](./02-lambdas.md#do-i-need-to-write-my-own-functional-interfaces)).
+In [chapter 2](./02-lambdas.md), we learned how lambdas can help us write clean, concise code, by allowing us to pass behavior without the need to create a class. Lambdas are a simple language construct that help developers express their intent on the fly by using functional interfaces. The real power of lambdas can be experienced when an API is designed while keeping lambdas in mind, i.e. a fluent API that makes use of Functional interfaces (we discussed them in the [lambdas chapter](./02-lambdas.md#do-i-need-to-write-my-own-functional-interfaces)).
 
-One such API that makes heavy use of lambdas is Stream API introduced in JDK 8. Streams provide a higher level abstraction to express computations on Java collections in a declarative way similar to how SQL helps you declaratively query data in the database. Declarative means developers write what they want to do rather than how it should be done. In this chapter, we will discuss why need a new data processing API, difference between Collection and Stream, and how to use Stream API in your applications.
+One such API that makes use of lambdas is the Stream API introduced in JDK 8. Streams provide a higher level abstraction to express computations on Java collections in a declarative way similar to how SQL helps you declaratively query data in a database. Declarative means developers write what they want to do rather than how it should be done. In this chapter, we will discuss the need for a new data processing API, the difference between `Collection` and `Stream`, and how to use the Stream API in your applications.
 
 > Code for this section is inside [ch03 package](https://github.com/shekhargulati/java8-the-missing-tutorial/tree/master/code/src/main/java/com/shekhargulati/java8_tutorial/ch03).
 
-## Why we need a new data processing abstraction?
+## Why we need a new data processing abstraction
 
-In  my opinion, there are two reasons:
+In my opinion, there are two reasons:
 
-1. Collection API does not provide higher level constructs to query the data so developers are forced to write a lot of boilerplate code for the most trivial task.
+1. The `Collection` API does not provide higher level constructs to query the data, so developers are forced to write a lot of boilerplate code for trivial tasks.
 
-2. It has limited language support to process Collection data in parallel. It is left to the developer to use Java language concurrency constructs and process data effectively and efficiently in parallel.
+2. It has limited language support to process `Collection` data in parallel. It is left to the developer to use Java language concurrency constructs and process data effectively and efficiently in parallel.
 
 ## Data processing before Java 8
 
-Look at the code shown below and try to predict what code does.
+Look at the code shown below and try to predict what it does.
 
 ```java
 public class Example1_Java7 {
@@ -44,11 +44,11 @@ public class Example1_Java7 {
 }
 ```
 
-The code shown above prints all the reading task titles sorted by their title length. All Java developers write this kind of code everyday. To write such a simple program we had to write 15 lines of Java code. The bigger problem with the above mentioned code is not the number of lines a developer has to write but, it misses the developer's intent i.e. filtering reading tasks, sorting by title length, and transforming to List of String.
+The code shown above prints all the reading task titles, sorted by their title length. Java 7 developers write this kind of code every day. To write such a simple program, we had to write 15 lines of Java code. The bigger problem with the above mentioned code is not the number of lines a developer has to write but, that it misses the developer's intent, i.e. filtering reading tasks, sorting by title length, and transforming to String List.
 
 ## Data processing in Java 8
 
-The above mentioned code can be simplified using Java 8 streams API as shown below.
+The above mentioned code can be simplified using the Java 8 `Stream` API, as shown below.
 
 ```java
 public class Example1_Stream {
@@ -67,35 +67,35 @@ public class Example1_Stream {
 }
 ```
 
-The code shown above constructs a pipeline composing of multiple stream operations as discussed below.
+The code shown above constructs a pipeline comprising multiple stream operations, each discussed below.
 
-* **stream()** - You created a stream pipeline by invoking the `stream()` method on the source collection i.e. `tasks` `List<Task>`.
+* **stream()** - Created a stream pipeline by invoking the `stream()` method on the source collection, i.e. `tasks` `List<Task>`.
 
-* **filter(Predicate<T>)** - This operation extract elements in the stream matching the condition defined by the predicate. Once you have a stream you can call zero or more intermediate operations on it. The lambda expression `task -> task.getType() == TaskType.READING` defines a predicate to filter all reading tasks. The type of lambda expression is `java.util.function.Predicate<Task>`.
+* **filter(Predicate<T>)** - This operation extracted elements in the stream matching the condition defined by the predicate. Once you have a stream you can call zero or more intermediate operations on it. The lambda expression `task -> task.getType() == TaskType.READING` defined a predicate to filter all reading tasks. The type of lambda expression is `java.util.function.Predicate<Task>`.
 
 * **sorted(Comparator<T>)**: This operation returns a stream consisting of all the stream elements sorted by the Comparator defined by lambda expression i.e. `(t1, t2) -> t1.getTitle().length() - t2.getTitle().length()` in the example shown above.
 
 * **map(Function<T,R>)**: This operation returns a stream after applying the Function<T,R> on each element of this stream.
 
-* **collect(toList())** - This operation collects result of the operations performed on the Stream to a List.
+* **collect(toList())** - This operation collects results of the operations performed on the Stream into a List.
 
-### Why Java 8 code is better?
+### Why Java 8 code is better
 
 In my opinion Java 8 code is better because of following reasons:
 
-1. Java 8 code clearly reflect developer intent of filtering, sorting, etc.
+1. Java 8 code clearly reflects developer intent of filtering, sorting, etc.
 
-2. Developers express what they want to do rather than how they want do it by using a higher level abstraction in the form of Stream API.
+2. Developers express what they want to do rather than how they want do it by using a higher level abstraction in the form of the Stream API.
 
-3. Stream API provides a unified language for data processing. Now developers will have the common vocabulary when they are talking about data processing. When two developers talk about `filter` function you can be sure that they both are applying a data filtering operation.
+3. The Stream API provides a unified language for data processing. Now developers will have a common vocabulary when talking about data processing. When two developers talk about a `filter` function, you can be sure that they both are applying a data filtering operation.
 
-4. No boilerplate code required to express data processing. Developers now don't have to write explicit for loops or create temporary collections to store data. All is taken care by the Stream API itself.
+4. No boilerplate code is required to express data processing. Developers no longer have to write explicit `for` loops, or create temporary collections to store data. All is taken care by the Stream API itself.
 
-5. Streams does not modify your underlying collection. They are non mutating.
+5. Streams do not modify your underlying collection - they are non-mutating.
 
 ## What is a Stream?
 
-Stream is an abstract view over some data. For example, Stream can be a view over a list or lines in a file or any other sequence of elements. Stream API provides aggregate operations that can be performed sequentially or in parallel. ***One thing that developers should keep in mind is that Stream is an higher level abstraction not a data structure. Stream does not store your data.*** Streams are **lazy** by nature and they are only computed when accessed. This allows us to produce infinite streams of data. In Java 8, you can very easily write a Stream that will produce infinite unique identifiers as shown below.
+Stream is an abstract view over some data. For example, Stream can be a view over a list, or lines in a file, or any other sequence of elements. The Stream API provides aggregate operations that can be performed sequentially, or in parallel. ***One thing that developers should keep in mind is that Stream is a higher level abstraction, not a data structure. Stream does not store your data. ***Streams are **lazy** by nature, and they are only computed when accessed. This allows us to produce infinite streams of data. In Java 8, you can very easily write a Stream that will produce infinite unique identifiers as shown below.
 
 ```
 public static void main(String[] args) {
@@ -103,7 +103,7 @@ public static void main(String[] args) {
 }
 ```
 
-There are various static factory methods like `of`, `generate`, and `iterate` in the Stream interface that one can use to create Stream instances. The `generate` method shown above takes a `Supplier`. `Supplier` is a functional interface to describe a function that does not take any input and produce a value. We passed the `generate` method a supplier that when invoked generates a unique identifier.
+There are various static factory methods like `of`, `generate`, and `iterate` in the Stream interface, that one can use to create Stream instances. The `generate` method shown above takes a `Supplier`. `Supplier` is a functional interface to describe a function that does not take any input and produce a value. We passed the `generate` method a supplier, that, when invoked, generates a unique identifier.
 
 ```java
 Supplier<String> uuids = () -> UUID.randomUUID().toString()
@@ -118,7 +118,7 @@ public static void main(String[] args) {
 }
 ```
 
-Java 8 allows you to create Stream from a Collection by calling the `stream` method on it. Stream supports data processing operations so that developers can express computations using higher level data processing constructs.
+Java 8 allows you to create a Stream from a Collection by calling the `stream` method on it. Stream supports data processing operations so that developers can express computations using higher level data processing constructs.
 
 ## Collection vs Stream
 
@@ -126,24 +126,24 @@ The table shown below explains the difference between a Collection and a Stream.
 
 ![Collection vs Stream](https://whyjava.files.wordpress.com/2015/10/collection_vs_stream.png)
 
-Let's discuss External iteration vs internal iteration and Lazy evaluation in detail.
+Let's discuss External iteration vs internal iteration, and Lazy evaluation in detail.
 
 ### External iteration vs internal iteration
 
-The difference between Java 8 Stream API code and Collection API code shown above is who controls the iteration, the iterator or the client that uses the iterator. Users of the Stream API just provide the operations they want to apply, and iterator applies those operations to every element in the underlying Collection. When iterating over the underlying collection is handled by the iterator itself, it is called **internal iteration**. On the other hand, when iteration is handled by the client it is called **external iteration**. The use of `for-each` construct in the Collection API code is an example of **external iteration**.
+The difference between Java 8 Stream API code and Collection API code shown above is who controls the iteration -- the iterator or the client that uses the iterator. Users of the Stream API just provide the operations they want to apply, and the iterator applies those operations to every element in the underlying Collection. When iterating over the underlying collection and the process is handled by the iterator itself, this is called **internal iteration**. On the other hand, when iteration is handled by the client it is called **external iteration**. The use of `for-each` construct in the Collection API code is an example of **external iteration**.
 
-Some might argue that in the Collection API code we didn't have to work with the underlying iterator as the `for-each` construct took care of that but, `for-each` is nothing more than syntactic sugar over manual iteration using the iterator API. The `for-each` construct although very simple has few disadvantages -- 1) It is inherently sequential 2) It leads to imperative code 3) It is difficult to parallelize.
+Some might argue that in the Collection API code we didn't have to work with the underlying iterator as the `for-each` construct took care of that but, `for-each` is nothing more than syntactic sugar over manual iteration using the iterator API. The `for-each` construct, although very simple, has a few disadvantages -- 1) It is inherently sequential, 2) It leads to imperative code, and 3) It is difficult to parallelize.
 
 ### Lazy evaluation
 
-Streams are not evaluated until a terminal operation is called on them. Most of the operations in the Stream  API return a Stream. These operations does not perform any execution they just builds the pipeline. Let's look at the code shown below and try to predict its output.
+Streams are not evaluated until a terminal operation is called on them. Most of the operations in the Stream  API return a Stream. These operations do not perform any execution -- they just build the pipeline. Let's look at the code shown below and try to predict its output.
 
 ```java
 List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 Stream<Integer> stream = numbers.stream().map(n -> n / 0).filter(n -> n % 2 == 0);
 ```
 
-In the code shown above, we are dividing elements in numbers stream by 0. We might expect that this code will throw `ArithmeticException` when the code is executed. But, when you run this code no exception will be thrown. This is because streams are not evaluated until a terminal operation is called on the stream. If you add terminal operation to the stream pipeline, then stream is executed, and exception is thrown.
+In the code shown above, we are dividing elements in numbers stream by 0. We might expect that this code will throw `ArithmeticException` when the code is executed. But, when you run this code no exception will be thrown. This is because streams are not evaluated until a terminal operation is called on the stream. If you add terminal operation to the stream pipeline, then the stream is executed, and an exception is thrown.
 
 ```java
 List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
@@ -168,19 +168,19 @@ Exception in thread "main" java.lang.ArithmeticException: / by zero
 
 ## Using Stream API
 
-Stream API provides a lot of operations that developers can use to query data from collections. Stream operations fall into either of the two categories -- intermediate operation or terminal operation.
+The Stream API provides many operations that developers can use to query data from collections. Stream operations fall into either of the two categories -- intermediate operation, or terminal operation.
 
 **Intermediate operations** are functions that produce another stream from the existing stream like `filter`, `map`, `sorted`, etc.
 
 **Terminal operations** are functions that produce a non-stream result from the Stream like `collect(toList())` , `forEach`, `count` etc.
 
-Intermediate operations allows you to build the pipeline which gets executed when you call the terminal operation. Below is the list of functions that are part of the Stream API.
+Intermediate operations allow you to build the pipeline which gets executed when you call the terminal operation. Below is the list of functions that are part of the Stream API.
 
 <a href="https://whyjava.files.wordpress.com/2015/07/stream-api.png"><img class="aligncenter size-full wp-image-2983" src="https://whyjava.files.wordpress.com/2015/07/stream-api.png" alt="stream-api" height="450" /></a>
 
 ### Example domain
 
-Throughout this tutorial we will use Task management domain to explain the concepts. Our example domain has one class called Task -- a task to be performed by user. The class is shown below.
+Throughout this tutorial we will use Task management domain to explain concepts. Our example domain has one class called Task -- a task to be performed by user. The class is shown below.
 
 ```java
 import java.time.LocalDate;
@@ -220,7 +220,7 @@ List<Task> tasks = Arrays.asList(task1, task2, task3, task4, task5);
 
 The first example that we will discuss is to find all the reading task titles sorted by creation date. The operations that we need to perform are:
 
-1. Filter all the tasks that have TaskType as READING.
+1. Filter all the tasks that have TaskType as `READING`.
 2. Sort the filtered values tasks by `createdOn` field.
 3. Get the value of title for each task.
 4. Collect the resulting titles in a List.
@@ -238,9 +238,9 @@ private static List<String> allReadingTasks(List<Task> tasks) {
 }
 ```
 
-In the code shown above, we used following methods of the Stream API:
+In the code shown above, we used the following methods of the Stream API:
 
-* **filter**:  Allows you to specify a predicate to exclude some elements from the underlying stream. The predicate **task -> task.getType() == TaskType.READING** selects all the tasks whose TaskType is READING.
+* **filter**:  Allows you to specify a predicate to exclude some elements from the underlying stream. The predicate **task -> task.getType() == TaskType.READING** selects all the tasks whose TaskType is `READING`.
 
 * **sorted**: Allows you to specify a Comparator that will sort the stream. In this case, you sorted based on the creation date. The lambda expression **(t1, t2) -> t1.getCreatedOn().compareTo(t2.getCreatedOn())** provides implementation of the `compare` method of Comparator functional interface.
 
@@ -265,7 +265,7 @@ public List<String> allReadingTasks(List<Task> tasks) {
 
 In the code shown above, we used a static helper method `comparing` available in the `Comparator` interface which accepts a `Function` that extracts a `Comparable` key, and returns a `Comparator` that compares by that key. The method reference `Task::getCreatedOn` resolves to `Function<Task, LocalDate>`.
 
-Using function composition, we can very easily write code that reverses the sorting order by calling `reversed()` method on Comparator as shown below.
+Using function composition, we can very easily write code that reverses the sorting order by calling the `reversed()` method on Comparator, as shown below.
 
 ```java
 public List<String> allReadingTasksSortedByCreatedOnDesc(List<Task> tasks) {
@@ -279,7 +279,7 @@ public List<String> allReadingTasksSortedByCreatedOnDesc(List<Task> tasks) {
 
 ### Example 2: Find distinct tasks
 
-Suppose, we have a dataset which contains duplicate tasks. We can very easily remove the duplicates and get only distinct elements by using the `distinct` method on the stream as shown below.
+Suppose, we have a dataset which contains duplicate tasks. We can very easily remove the duplicates and get only distinct elements by using the `distinct` method on the stream, as shown below.
 
 ```java
 public List<Task> allDistinctTasks(List<Task> tasks) {
@@ -287,7 +287,7 @@ public List<Task> allDistinctTasks(List<Task> tasks) {
 }
 ```
 
-The `distinct()` method converts one stream into another without duplicates. It uses the Object's `equals` method for determining the object equality. According to Object's equal method contract, when two objects are equal, they are considered duplicates and will be removed from the resulting stream.
+The `distinct()` method converts one stream into another without duplicates. It uses the Object's `equals` method for determining the object equality. According to that Object's `equals` method contract, when two objects are equal, they are considered duplicates, and will be removed from the resulting stream.
 
 ### Example 3: Find top 5 reading tasks sorted by creation date
 
@@ -304,7 +304,7 @@ public List<String> topN(List<Task> tasks, int n){
 }
 ```
 
-You can use `limit` along with `skip` method to create pagination as shown below.
+You can use `limit` along with the `skip` method to create pagination, as shown below.
 
 ```java
 // page starts from 0. So to view a second page `page` will be 1 and n will be 5.
@@ -348,7 +348,7 @@ private static List<String> allDistinctTags(List<Task> tasks) {
 
 ### Example 6: Check if all reading tasks have tag `books`
 
-Stream API has methods that allows the users to check if elements in the dataset match a given property. These methods are `allMatch`, `anyMatch`, `noneMatch`, `findFirst`, and `findAny`. To check if all reading titles have a tag with name `books` we can write code as shown below.
+The Stream API has methods that allows the user to check if elements in the dataset match a given property. These methods are `allMatch`, `anyMatch`, `noneMatch`, `findFirst`, and `findAny`. To check if all reading titles have a tag with name `books`, we can write code as shown below.
 
 ```java
 public boolean isAllReadingTasksWithTagBooks(List<Task> tasks) {
@@ -370,7 +370,7 @@ public boolean isAnyReadingTasksWithTagJava8(List<Task> tasks) {
 
 ### Example 7: Creating a summary of all titles
 
-Suppose, you want to create a summary of all the titles then you can use `reduce` operation, which reduces the stream to a value. The `reduce` function takes a lambda which joins elements of the stream.
+Suppose you want to create a summary of all the titles. Use the `reduce` operation, which reduces the stream to a value. The `reduce` function takes a lambda which joins elements of the stream.
 
 ```java
 public String joinAllTaskTitles(List<Task> tasks) {
@@ -431,7 +431,7 @@ Arrays.stream(tags, 1, 3).map(String::toUpperCase).forEach(System.out::println);
 
 ## Parallel Streams
 
-One advantage that you get by using Stream abstraction is that now library can effectively manage parallelism as iteration is internal. You can make a stream parallel by calling `parallel` method on it. The `parallel` method underneath uses the fork-join API introduced in JDK 7. By default, it will spawn up threads equal to number of CPU in your machine. In the code show below, we are grouping numbers by thread that processed them. You will learn about `collect` and `groupingBy` functions in chapter 4. For now just understand that they allow you to group elements based on a key.
+One advantage that you get by using the `Stream` abstraction is that now the library can effectively manage parallelism, as iteration is internal. You can make a stream parallel by calling `parallel` method on it. The `parallel` method underneath uses the fork-join API introduced in JDK 7. By default, it will spawn up threads equal to the number of CPUs in the host machine. In the code show below, we are grouping numbers by thread that processed them. You will learn about `collect` and `groupingBy` functions in chapter 4. For now, just understand that they allow you to group elements based on a key.
 
 ```java
 public class ParallelStreamExample {
@@ -460,16 +460,16 @@ ForkJoinPool.commonPool-worker-3 >> [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
 ForkJoinPool.commonPool-worker-4 >> [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145]
 ```
 
-Not every thread process same number of elements. You can control the size of fork join thread pool by setting a system property `System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "2")`.
+Not every thread processed the same number of elements. You can control the size of the fork-join thread pool by setting a system property `System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "2")`.
 
-Another example where you can use `parallel` operation is when you are processing a list of URLs as shown below.
+Another example where you can use the `parallel` operation is when you are processing a list of URLs, as shown below.
 
 ```java
 String[] urls = {"https://www.google.co.in/", "https://twitter.com/", "http://www.facebook.com/"};
 Arrays.stream(urls).parallel().map(url -> getUrlContent(url)).forEach(System.out::println);
 ```
 
-If you need to understand when to use Parallel Stream I would recommend you read this article by Doug Lea and few other Java folks [http://gee.cs.oswego.edu/dl/html/StreamParallelGuidance.html](http://gee.cs.oswego.edu/dl/html/StreamParallelGuidance.html) to gain better understanding.
+If you need to understand when to use a Parallel Stream, I recommend reading this article by Doug Lea et al. [http://gee.cs.oswego.edu/dl/html/StreamParallelGuidance.html](http://gee.cs.oswego.edu/dl/html/StreamParallelGuidance.html).
 
 
 [![Analytics](https://ga-beacon.appspot.com/UA-59411913-3/shekhargulati/java8-the-missing-tutorial/03-streams)](https://github.com/igrigorik/ga-beacon)
