@@ -1,13 +1,13 @@
 Collectors
 ------
 
-On [day 2](http://shekhargulati.com/2015/07/26/day-2-lets-learn-about-streams/), you learned that Stream API can help you work with collections in a declarative manner. We looked at the `collect`, which is a terminal operation that collects the result set of a stream pipeline in a `List`. `collect` is a reduction operation that reduces a stream to a value. The value could be a Collection, Map, or a value object. You can use `collect` to achieve following:
+On [day 2](http://shekhargulati.com/2015/07/26/day-2-lets-learn-about-streams/), you learned that the Stream API can help you work with collections in a declarative manner. We looked at `collect`, which is a terminal operation that collects the result set of a stream pipeline in a `List`. `collect` is a reduction operation that reduces a stream to a value. The value could be a Collection, Map, or a value object. You can use `collect` to achieve following:
 
 1. **Reducing stream to a single value:** Result of the stream execution can be reduced to a single value. Single value could be a `Collection` or numeric value like int, double, etc or a custom value object.
 
-2. **Group elements in a stream:** Group all the tasks in a stream by TaskType. This will result in a `Map<TaskType, List<Task>>` with each entry containing a TaskType and its associated Tasks. You can use any other Collection instead of a List as well. If you don't need all the tasks associated with a TaskType you can also produce `Map<TaskType, Task>` as well. One example could be grouping tasks by type and obtaining the first created task.
+2. **Group elements in a stream:** Group all the tasks in a stream by TaskType. This will result in a `Map<TaskType, List<Task>>` with each entry containing a TaskType and its associated Tasks. You can use any other Collection instead of a List as well. If you don't need all the tasks associated with a TaskType, you can alternatively produce a `Map<TaskType, Task>`. One example could be grouping tasks by type and obtaining the first created task.
 
-3. **Partition elements in a stream:** You can partition a stream into two groups -- due and completed tasks.
+3. **Partition elements in a stream:** You can partition a stream into two groups -- e.g. due and completed tasks.
 
 ## Collector in Action
 
@@ -19,7 +19,7 @@ private static Map<TaskType, List<Task>> groupTasksByType(List<Task> tasks) {
 }
 ```
 
-The code shown above uses `groupingBy` `Collector` defined in the `Collectors` utility class. It creates a Map with key as the `TaskType` and value as the list containing all the tasks which have same `TaskType`. To achieve the same in Java 7 you have to write following code.
+The code shown above uses `groupingBy` `Collector` defined in the `Collectors` utility class. It creates a Map with key as the `TaskType` and value as the list containing all the tasks which have same `TaskType`. To achieve the same in Java 7, you would have to write the following.
 
 ```java
 public static void main(String[] args) {
@@ -43,7 +43,7 @@ public static void main(String[] args) {
 
 ## Collectors: Common reduction operations
 
-`Collectors` utility class provides a lot of static utility methods for creating collectors for most common use cases like accumulating elements into a Collection, grouping and partitioning elements, summarizing elements according to various criteria. We will cover most common `Collector`s in this blog.
+The `Collectors` utility class provides a lot of static utility methods for creating collectors for most common use cases like accumulating elements into a Collection, grouping and partitioning elements, or summarizing elements according to various criteria. We will cover the most common `Collector`s in this blog.
 
 ## Reducing to a single value
 
@@ -76,7 +76,7 @@ public Set<String> uniqueTitles(List<Task> tasks) {
 }
 ```
 
-`toSet` method uses `HashSet` as the Set implementation to store the result set.
+The `toSet` method uses a `HashSet` as the Set implementation to store the result set.
 
 ### Collecting data into a Map
 
@@ -87,7 +87,7 @@ private static Map<String, Task> taskMap(List<Task> tasks) {
   return tasks.stream().collect(toMap(Task::getTitle, task -> task));
 }
 ```
-We can improve the code shown above by using the `identity` default method in the `Function` interface to make code cleaner and better convey developer intent to use identity function as shown below.
+We can improve the code shown above by using the `identity` default method in the `Function` interface to make code cleaner and better convey developer intent, as shown below.
 
 ```java
 import static java.util.function.Function.identity;
@@ -104,7 +104,7 @@ Exception in thread "main" java.lang.IllegalStateException: Duplicate key Task{t
 at java.util.stream.Collectors.lambda$throwingMerger$105(Collectors.java:133)
 ```
 
-You can handle duplicates by using another variant of the `toMap` function which allows us to specify a merge function. The merge function allows a client to specify how they want to resolve collisions between values associated with the same key. In the code shown below, we just used the last value but you can write intelligent algorithm to resolve the collision.
+You can handle duplicates by using another variant of the `toMap` function which allows us to specify a merge function. The merge function allows a client to specify how they want to resolve collisions between values associated with the same key. In the code shown below, we just used the newer value, but you can equally write an intelligent algorithm to resolve collisions.
 
 ```java
 private static Map<String, Task> taskMap_duplicates(List<Task> tasks) {
@@ -120,11 +120,11 @@ public Map<String, Task> collectToMap(List<Task> tasks) {
 }
 ```
 
-Similar to the `toMap` collector there is also `toConcurrentMap` collector that produces `ConcurrentMap` instead of a  `HashMap`.
+Similar to the `toMap` collector, there is also `toConcurrentMap` collector, which produces a `ConcurrentMap` instead of a `HashMap`.
 
 ### Using other collections
 
-The specific collectors like `toList` and `toSet` does not allow you to specify the underlying List or Set implementation. You can use `toCollection` collector when you want to collect the result to other types of collections as shown below.
+The specific collectors like `toList` and `toSet` do not allow you to specify the underlying List or Set implementation. You can use the `toCollection` collector when you want to collect the result to other types of collections, as shown below.
 
 ```
 private static LinkedHashSet<Task> collectToLinkedHaskSet(List<Task> tasks) {
@@ -162,7 +162,7 @@ One of the most common use case of Collector is to group elements. Let's look at
 
 ### Example 1: Grouping tasks by type
 
-Let's look the example shown below where we want to group all the tasks based on their `TaskType`. You can very easily perform this task by using the `groupingBy` Collector of the `Collectors` utility class as shown below. You can make it more succinct by using method references and static imports.
+Let's look at the example shown below, where we want to group all the tasks based on their `TaskType`. You can very easily perform this task by using the `groupingBy` Collector of the `Collectors` utility class. You can make it more succinct by using method references and static imports.
 
 ```java
 import static java.util.stream.Collectors.groupingBy;
@@ -226,7 +226,7 @@ private static Map<TaskType, Map<LocalDate, List<Task>>> groupTasksByTypeAndCrea
 
 ## Partitioning
 
-There are times when you want to partition a dataset into two dataset based on a predicate. For example, we can partition tasks into two groups by defining a partitioning function that partition tasks into two groups -- one with due date before today and one with due date after today.
+There are times when you want to partition a dataset into two datasets based on a predicate. For example, we can partition tasks into two groups by defining a partitioning function that partitions tasks into two groups -- one with due date before today, and one with the others.
 
 ```java
 private static Map<Boolean, List<Task>> partitionOldAndFutureTasks(List<Task> tasks) {
@@ -236,7 +236,8 @@ private static Map<Boolean, List<Task>> partitionOldAndFutureTasks(List<Task> ta
 
 ## Generating statistics
 
-Another group of collectors that are very helpful are collectors that produce statistics. These work on the primitive datatypes like int,double, long and can be used to produce statistics like the one shown below.
+Another group of collectors that are very helpful are collectors that produce statistics. These work on the primitive datatypes like `int`, `double`, and `long`; and can be used to produce statistics like those shown below.
+
 ```java
 IntSummaryStatistics summaryStatistics = tasks.stream().map(Task::getTitle).collect(summarizingInt(String::length));
 System.out.println(summaryStatistics.getAverage()); //32.4
@@ -330,7 +331,7 @@ public class MultisetCollectorExample {
 
 ## Word Count in Java 8
 
-We will end this section by writing famous word count example in Java 8 using Streams and Collectors.
+We will end this section by writing the famous word count example in Java 8 using Streams and Collectors.
 
 ```java
 public static void wordCount(Path path) throws IOException {
