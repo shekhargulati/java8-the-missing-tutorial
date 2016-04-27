@@ -1,11 +1,16 @@
 Map Improvements
 ---------
 
-Map is one the most important data structure. In Java 8, a lot of goodies has been added to the Map API that will make it easy to work with them. We will look at all the enhancements made to them one by one. Every feature is shown along with its JUnit test case.
+Map is one the most important data structure. In Java 8, a lot of goodies has
+been added to the Map API that will make it easy to work with them. We will look
+at all the enhancements made to them one by one. Every feature is shown along
+with its JUnit test case.
 
 ## Create Map from List
 
-Most of the times we want to create a map from existing data. Let's suppose we have a list of tasks, every task has an id and other associated data like title, description, etc.
+Most of the times we want to create a map from existing data. Let's suppose we
+have a list of tasks, every task has an id and other associated data like title,
+description, etc.
 
 ```java
 import static java.util.function.Function.identity;
@@ -26,8 +31,8 @@ public void shouldCreateMapFromTaskList() throws Exception {
 
 ## Using a different Map implementation
 
-
-The default implementation used by `Collectors.toMap` is `HashMap`. You can also specify your own Map implementation by providing a supplier.
+The default implementation used by `Collectors.toMap` is `HashMap`. You can also
+specify your own Map implementation by providing a supplier.
 
 ```java
 @Test
@@ -46,7 +51,8 @@ public void shouldCreateLinkedMapFromTaskList() throws Exception {
 
 ## Handling duplicates
 
-One thing that we glossed over in the last example was what should happen if there are duplicates. To handle duplicates there is a argument
+One thing that we glossed over in the last example was what should happen if
+there are duplicates. To handle duplicates there is a argument
 
 ```java
 @Test
