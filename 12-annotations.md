@@ -1,7 +1,8 @@
 Annotation Improvements
 -------
 
-There are couple of improvements made in the annotation mechanism in Java 8. These are:
+There are couple of improvements made in the annotation mechanism in Java 8.
+These are:
 
 1. Repeatable annotations
 2. Type annotations
@@ -10,7 +11,10 @@ There are couple of improvements made in the annotation mechanism in Java 8. The
 
 ## Repeatable annotations
 
-Before Java 8, it was not possible to use same annotation twice at the same location i.e.  you can't use annotation `@Foo` twice on a method. If you have used JPA then you would have use an annotation called `@JoinColumns` that allows wraps multiple `@JoinColumn` annotation as shown below.
+Before Java 8, it was not possible to use same annotation twice at the same
+location i.e.  you can't use annotation `@Foo` twice on a method. If you have
+used JPA then you would have use an annotation called `@JoinColumns` that allows
+wraps multiple `@JoinColumn` annotation as shown below.
 
 ```java
 @ManyToOne
@@ -30,14 +34,18 @@ In Java 8, you can write the same as shown below because with Java 8 you can rep
 public Address getAddress() { return address; }
 ```
 
-
-***With Java 8 you can use same annotation type multiple times possibly with different arguments at any location(class, method, field declaration) in your Java code.***
+***With Java 8 you can use same annotation type multiple times possibly with
+different arguments at any location(class, method, field declaration) in your
+Java code.***
 
 ### Writing your own repeatable Annotations
 
 To write your own repeatable annotation you have to do the following:
 
-**Step 1:**  Create an annotation with `@Repeatable` annotation as shown below. `@Repeatable` annotation requires you to specify a mandatory value for the container type that will contain the annotation. We will create container annotation in step 2.
+**Step 1:** Create an annotation with `@Repeatable` annotation as shown below.
+`@Repeatable` annotation requires you to specify a mandatory value for the
+container type that will contain the annotation. We will create container
+annotation in step 2.
 
 ```java
 import java.lang.annotation.*;
@@ -70,7 +78,10 @@ public void manage() {
 }
 ```
 
-If you have to find all the repeatable annotations on a method then you can use `getAnnotationsByType` method that is now available on `java.lang.Class` and `java.lang.reflect.Method`. To print all the vm names, you can write code as shown below.
+If you have to find all the repeatable annotations on a method then you can use
+`getAnnotationsByType` method that is now available on `java.lang.Class` and
+`java.lang.reflect.Method`. To print all the vm names, you can write code as
+shown below.
 
 ```java
 CreateVm[] createVms = VmManager.class.getMethod("manage").getAnnotationsByType(CreateVm.class);
@@ -79,7 +90,8 @@ Stream.of(createVms).map(CreateVm::name).forEach(System.out::println);
 
 ## Type annotations
 
-You can now apply annotations at two more target locations -- TYPE_PARAMETER and TYPE_USE.
+You can now apply annotations at two more target locations -- TYPE_PARAMETER and
+TYPE_USE.
 
 ```java
 @Retention(RetentionPolicy.RUNTIME)
