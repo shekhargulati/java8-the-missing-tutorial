@@ -14,12 +14,8 @@ Please contribute if you see an error or something that could be better! Raise a
 * [Streams](./03-streams.md)
 * [Collectors](./04-collectors.md)
 * [Optionals](./05-optionals.md)
-* [Map improvements](./06-map.md): Not written yet
-* [Building functional programs](./07-building-functional-programs.md): Not written yet
 * [Date Time API](./08-date-time-api.md)
-* [Completable Futures](./09-completable-futures.md): Not written yet
 * [Nashorn](./10-nashorn.md)
-* [Tools](./11-tools.md): Not written yet
 * [Annotation improvements](./12-annotations.md)
 
 -----------
