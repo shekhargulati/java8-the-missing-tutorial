@@ -9,7 +9,7 @@ popular and relevant, Java is forced to embrace the functional style of
 programming. Otherwise, Java would become irrelevant.
 
 Java 8 is a big step forward in making the world's most popular language adopt
-the functional style of programming. To support functional a programming style,
+the functional style of programming. To support a functional programming style,
 the language must support functions as first class citizens. Prior to Java 8,
 writing a clean functional style code was not possible without the use of an
 anonymous inner class boilerplate. With the introduction of Lambda expressions,
