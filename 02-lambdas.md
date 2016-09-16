@@ -492,14 +492,27 @@ public class Exercise_Lambdas {
 Using method reference for extractor
 
 ```java
-public static void main(String[] args) {
-    List<Task> tasks = getTasks();
-    List<String> titles = filterAndExtract(tasks, task -> task.getType() == TaskType.READING, Task::getTitle);
-    titles.forEach(System.out::println);
-    List<LocalDate> createdOnDates = filterAndExtract(tasks, task -> task.getType() == TaskType.READING, Task::getCreatedOn);
-    createdOnDates.forEach(System.out::println);
-    List<Task> filteredTasks = filterAndExtract(tasks, task -> task.getType() == TaskType.READING, Function.identity());
-    filteredTasks.forEach(System.out::println);
+public class Exercise_Lambdas {
+
+    public static void main(String[] args) {
+        List<Task> tasks = getTasks();
+        List<String> titles = filterAndExtract(tasks, task -> task.getType() == TaskType.READING, Task::getTitle);
+        titles.forEach(System.out::println);
+        List<LocalDate> createdOnDates = filterAndExtract(tasks, task -> task.getType() == TaskType.READING, Task::getCreatedOn);
+        createdOnDates.forEach(System.out::println);
+        List<Task> filteredTasks = filterAndExtract(tasks, task -> task.getType() == TaskType.READING, Function.identity());
+        filteredTasks.forEach(System.out::println);
+    }
+
+    public static <R> List<R> filterAndExtract(List<Task> tasks, Predicate<Task> filterTasks, Function<Task, R> extractor) {
+        List<R> readingTitles = new ArrayList<>();
+        for (Task task : tasks) {
+            if (filterTasks.test(task)) {
+                readingTitles.add(extractor.apply(task));
+            }
+        }
+        return readingTitles;
+    }
 }
 ```
 
