@@ -534,7 +534,7 @@ public class Exercise_Lambdas {
 interface TaskExtractor<R> extends Function<Task, R> {
 
     static TaskExtractor<Task> identityOp() {
-        return t -> t;
+        return t -> t.getTitle();
     }
 }
 ```
