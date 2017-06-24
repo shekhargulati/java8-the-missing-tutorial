@@ -145,19 +145,18 @@ import java.util.Optional;
 
 public class Task {
     private final String title;
-    private final Optional<User> assignedTo;
+    private final User assignedTo;
     private final String id;
 
     public Task(String id, String title) {
         this.id = id;
         this.title = title;
-        assignedTo = Optional.empty();
     }
 
     public Task(String id, String title, User assignedTo) {
         this.id = id;
         this.title = title;
-        this.assignedTo = Optional.ofNullable(assignedTo);
+        this.assignedTo = assignedTo;
     }
 
     public String getId() {
@@ -178,16 +177,15 @@ import java.util.Optional;
 public class User {
 
     private final String username;
-    private final Optional<String> address;
+    private final String address;
 
     public User(String username) {
         this.username = username;
-        this.address = Optional.empty();
     }
 
     public User(String username, String address) {
         this.username = username;
-        this.address = Optional.ofNullable(address);
+        this.address = address;
     }
 
     public String getUsername() {
@@ -200,7 +198,7 @@ public class User {
 }
 ```
 
-Use of the `Optional` data type in the data model makes it explicit that `Task` refers to an `Optional<User>` and `User` has an `Optional<String>*` username. Now whoever tries to work with `assignedTo` User would know that it might not be present and they can handle it in a declarative way. We will talk about `Optional.empty` and `Optional.of` methods in the next section.
+Since `Task.assignedTo` and `User.username` are nullable fields, each getter should return `Optional<User>` and `Optional<String>`. Now whoever tries to work with `assignedTo` User would know that it might not be present and they can handle it in a declarative way. We will talk about `Optional.empty` and `Optional.of` methods in the next section.
 
 ## Working with creational methods in the java.util.Optional API
 
@@ -231,7 +229,7 @@ public class TaskRepository {
 
 ## Using Optional values
 
-Optional can be thought of as a Stream with one element. It has methods similar to Stream API like `map`, `ilter`, and `flatMap`, which we can use to work with values contained in the `Optional`.
+Optional can be thought of as a Stream with one element. It has methods similar to Stream API like `map`, `filter`, and `flatMap`, which we can use to work with values contained in the `Optional`.
 
 ### Getting title for a Task
 
