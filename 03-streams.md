@@ -1,4 +1,4 @@
-Streams
+Streams [![TimeToRead](http://ttr.myapis.xyz/ttr.svg?pageUrl=https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/03-streams.md)](http://ttr.myapis.xyz/)
 ------
 
 In [chapter 2](./02-lambdas.md), we learned how lambdas can help us write clean,
