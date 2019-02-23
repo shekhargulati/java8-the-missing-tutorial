@@ -1,4 +1,4 @@
-Annotation Improvements
+Annotation Improvements [![TimeToRead](http://ttr.myapis.xyz/ttr.svg?pageUrl=https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/12-annotations.md)](http://ttr.myapis.xyz/)
 -------
 
 There are couple of improvements made in the annotation mechanism in Java 8.
