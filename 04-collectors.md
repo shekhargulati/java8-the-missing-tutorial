@@ -1,4 +1,4 @@
-Collectors
+Collectors [![TimeToRead](http://ttr.myapis.xyz/ttr.svg?pageUrl=https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/04-collectors.md)](http://ttr.myapis.xyz/)
 ------
 
 On [day 2](http://shekhargulati.com/2015/07/26/day-2-lets-learn-about-streams/),
