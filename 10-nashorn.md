@@ -1,4 +1,4 @@
-Nashorn: Run JavaScript on the JVM
+Nashorn: Run JavaScript on the JVM [![TimeToRead](http://ttr.myapis.xyz/ttr.svg?pageUrl=https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/10-nashorn.md)](http://ttr.myapis.xyz/)
 -----
 
 ![Nashorn](https://upload.wikimedia.org/wikipedia/commons/7/7a/Dortmunder_Nashorn_-_Hell_wieherte_der_Hippogryph.jpg)
