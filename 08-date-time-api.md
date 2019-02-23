@@ -1,4 +1,4 @@
-Date Time API
+Date Time API [![TimeToRead](http://ttr.myapis.xyz/ttr.svg?pageUrl=https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/08-date-time-api.md)](http://ttr.myapis.xyz/)
 -------
 
 So far in this [book](https://github.com/shekhargulati/java8-the-missing-tutorial)
