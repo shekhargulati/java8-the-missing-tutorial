@@ -1,4 +1,4 @@
-Optionals
+Optionals [![TimeToRead](http://ttr.myapis.xyz/ttr.svg?pageUrl=https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/05-optionals.md)](http://ttr.myapis.xyz/)
 ----
 
 Every Java developer, whether beginner, novice, or seasoned, has in their lifetime experienced `NullPointerException`. We all have wasted or spent many hours trying to fix bugs caused by `NullPointerException`. According to `NullPointerException`'s JavaDoc, ***NullPointerException is thrown when an application attempts to use null in a case where an object is required.***. This means if we invoke a method or try to access a property on ***null*** reference, then our code will explode and `NullPointerException` is thrown. In this chapter, you will learn how to write null-free code using Java 8's `Optional`.
