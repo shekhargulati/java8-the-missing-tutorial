@@ -1,4 +1,4 @@
-Lambdas
+Lambdas [![TimeToRead](http://ttr.myapis.xyz/ttr.svg?pageUrl=https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/02-lambdas.md)](http://ttr.myapis.xyz/)
 -----
 
 One of the most important features in Java 8 is the introduction of Lambda
