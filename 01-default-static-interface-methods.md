@@ -1,4 +1,4 @@
-Default and Static Methods for Interfaces
+Default and Static Methods for Interfaces [![TimeToRead](http://ttr.myapis.xyz/ttr.svg?pageUrl=https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/01-default-static-interface-methods.md)](http://ttr.myapis.xyz/)
 --------
 
 We all understand that we should code to interfaces. Interfaces give the client
