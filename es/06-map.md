@@ -1,11 +1,11 @@
 Mejoras en Map
 ---------
 
-Map es una de las estructuras de datos más importantes. En Java 8, se han añadido un montón de mejoras al API Map que harán más fácil el trabajar con él. Veremos todas estas mejoras una a una. Cada característica se mostrará con su correspondiente caso de prueba JUnit.
+`Map` es una de las estructuras de datos más importantes. En Java 8, se han añadido un montón de mejoras al API Map que harán más fácil el trabajar con él. Veremos todas estas mejoras una a una. Cada característica se mostrará con su correspondiente caso de prueba JUnit.
 
 ## Crear un Map a partir de un List
 
-La mayoría de las veces queremos crear un mapa a partir de datos ya existentes. Vamos a suponer que tenemos una lista de tareas, cada tarea tiene un identificador y otros datos asociados como el título, la descripción, etc.
+La mayoría de las veces queremos crear un mapa a partir de datos ya existentes. Vamos a suponer que tenemos una lista de tareas; cada tarea tiene un identificador y otros datos asociados como el título, la descripción, etc.
 
 ```java
 import static java.util.function.Function.identity;
@@ -26,7 +26,7 @@ public void shouldCreateMapFromTaskList() throws Exception {
 
 ## Usar una implementación diferente de Map
 
-La implementación por defecto usada por `Collectors.toMap` es `HashMap`. Puedes especificar tu propia implementación de Map suministrando un proveedor.
+La implementación por defecto usada por `Collectors.toMap()` es `HashMap`. Puedes especificar tu propia implementación de Map suministrando un proveedor.
 
 ```java
 @Test
@@ -45,7 +45,7 @@ public void shouldCreateLinkedMapFromTaskList() throws Exception {
 
 ## Manejando duplicados
 
-Una cosa que pasamos por alto en el último ejemplo es que pasaría si hubiese duplicados. Para controlar los duplicados tenemos un argumento.
+Una cosa que pasamos por alto en el último ejemplo es lo que pasaría si hubiese duplicados. Para controlar los duplicados tenemos el argumento extra.
 
 ```java
 @Test
@@ -61,13 +61,13 @@ public void shouldHandleTaskListWithDuplicates() throws Exception {
 }
 ```
 
-El test fallará.
+El test fallará:
 
 ```
 java.lang.IllegalStateException: Duplicate key Task{title='Write blog on Java 8 Map improvements', type=BLOGGING}
 ```
 
-Puedes controlar el error especificando tu función de unión.
+Puedes controlar el error especificando tu función de unión:
 
 ```java
 @Test
