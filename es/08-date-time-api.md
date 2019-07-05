@@ -1,11 +1,11 @@
 API de Fecha y Hora
 -------
 
-Hasta ahora en este [libro](https://github.com/malobato/java8-the-missing-tutorial) nos hemos centrado en la parte [funcional](02-lambdas.md)) y en [aspectos](03-streams.md) de Java 8, además hemos visto como diseñar mejores APIs usando [Optional](05-optionals.md) y [métodos por defecto  y estáticos en interfaces](01-default-static-interface-methods.md). En este capítulo, aprenderemos sobre otro API nuevo que cambiará la forma en la que trabajamos con fechas -- el API de Fecha y Hora. Casi todos los desarrolladores de Java estarán de acuerdo en que el soporte de fecha y hora anterior a Java 8 esta lejos de ser ideal y la mayoría de las veces tenemos que hacer uso de bibliotecas de terceros como [Joda-Time](http://www.joda.org/joda-time/) en nuestras aplicaciones. El nuevo API de fecha y hora esta muy influenciado por el API Joda-Time y si lo has usado ten sentirás como en casa.
+Hasta ahora en este [libro](https://github.com/malobato/java8-the-missing-tutorial) nos hemos centrado en la parte [funcional](02-lambdas.md) y en [aspectos](03-streams.md) de Java 8. Además hemos visto cómo diseñar mejores APIs usando [Optional](05-optionals.md) y [métodos por defecto  y estáticos en interfaces](01-default-static-interface-methods.md). En este capítulo, aprenderemos sobre otro API nuevo que cambiará la forma en la que trabajamos con fechas: el API de Fecha y Hora. Casi todos los desarrolladores de Java estarán de acuerdo en que el soporte de fecha y hora anterior a Java 8 esta lejos de ser ideal y la mayoría de las veces tenemos que hacer uso de bibliotecas de terceros como [Joda-Time](http://www.joda.org/joda-time/) en nuestras aplicaciones. El nuevo API de fecha y hora esta muy influenciado por el API Joda-Time y si lo has usado te sentirás como en casa.
 
-## ¿Qué tiene de malo el API de fecha existente?
+## ¿Qué tiene de malo el API de fecha anterior?
 
-Antes de aprender sobre el nuevo API de Fecha y Hora vamos a explicar porque no nos gusta el API de fecha actual. Observa el código de abajo y trata de responder que imprimirá.
+Antes de aprender sobre el nuevo API de Fecha y Hora vamos a explicar porque no nos gusta el API de fecha anterior. Observa el código de abajo y trata de responder que imprimirá.
 
 ```java
 import java.util.Date;
@@ -31,17 +31,17 @@ El código anterior tiene los siguientes problemas:
 
 4. El año comienza en 1900 y dado que el mes también es cíclico el año se convierte en `1900 + 12 + 1 == 1913`. ¡Imagínate!
 
-5. ¿Quién pidió la hora? Acabo de pedir la fecha y el programa también me imrime la hora.
+5. ¿Quién pidió la hora? Acabo de pedir la fecha y el programa también me imprime la hora.
 
-6. ¿Por qué esta la zona horaria? ¿Quién la pidió? La zona horaria es la zona horaria por defecto de la JVM, IST, Indian Standard Time en este ejemplo.
+6. ¿Por qué está la zona horaria? ¿Quién la pidió? La zona horaria es la zona horaria por defecto de la JVM, IST, Indian Standard Time en este ejemplo.
 
-> El API de fecha tiene cerca de 20 años y fue presentado con el JDK 1.0. Uno de los autores originales del API de fecha no es otro que el mismo James Gosling -- El padre del lenguaje de programación Java.
+> El API de fecha tiene cerca de 20 años y fue presentado con el JDK 1.0. Uno de los autores originales del API de fecha no es otro que el mismo James Gosling; el padre del lenguaje de programación Java.
 
-Existen muchos otros problemas de diseño del API de fecha como la mutabilidad, jerarquía de clases separadas para SQL, etc. En el JDK 1.1 se hizó un esfuerzo por proporcionar un mejor API, p. ej. `Calendar` pero también estaba plagado de problemas similares de mutabilidad e índices comenzando por 0.
+Existen muchos otros problemas de diseño del API de fecha como la mutabilidad, jerarquía de clases separadas para SQL, etc. En el JDK 1.1 se hizo un esfuerzo por proporcionar una mejor API con `Calendar` pero también estaba plagado de problemas similares de mutabilidad e índices comenzando por 0.
 
-## El API de Fecha y Hora de Java
+## El API de Fecha y Hora de Java 8
 
-El API de Fecha y Hora de Java 8 fue desarrollado como parte del JSR-310 y se encuentra en el paquete `java.time`. El API usa principio de **diseño orientado a dominio** con clases de dominio como LocalDate o LocalTime que se usan para resolver problemas relacionados a sus dominios específicos de fecha y hora. Esto hace que el API sea claro y fácil de ententer. El otro principo de diseño usado es el de **inmutabilidad**. Todas las clases del núcleo de `java.time` son inmutables por lo que evitan problemas de seguridad en hilos.
+El API de Fecha y Hora de Java 8 fue desarrollado como parte del JSR-310 y se encuentra en el paquete `java.time`. El API usa el principio de **diseño orientado a dominio** con clases de dominio como `LocalDate` o `LocalTime` que se usan para resolver problemas relacionados a sus dominios específicos de fecha y hora. Esto hace que el API sea claro y fácil de entender. El otro principio de diseño usado es el de **inmutabilidad**. Todas las clases del núcleo de `java.time` son inmutables por lo que evitan problemas de seguridad en hilos.
 
 ## Comenzando con el API de Fecha y Hora
 
@@ -73,7 +73,7 @@ public class DateTimeExamplesTest {
 }
 ```
 
-`LocalDate` has a static factory method `of` that takes year, month, and date and gives you a `LocalDate`. To make this test pass, we will write `dateOfBirth` method in `AbdulKalam` class using `of` method as shown below.
+`LocalDate` has a static factory method `of()` that takes year, month, and date and gives you a `LocalDate`. To make this test pass, we will write `dateOfBirth` method in `AbdulKalam` class using `of()` method as shown below.
 
 ```java
 import java.time.LocalDate;
@@ -86,9 +86,9 @@ public class AbdulKalam {
 }
 ```
 
-There is an overloaded `of` method that takes month as integer instead of `Month` enum. I recommend using `Month` enum as it is more readable and clear. There are two other static factory methods to create `LocalDate` instances -- `ofYearDay` and `ofEpochDay`.
+There is an overloaded `of()` method that takes month as integer instead of `Month` enum. I recommend using `Month` enum as it is more readable and clear. There are two other static factory methods to create `LocalDate` instances: `ofYearDay()` and `ofEpochDay()`.
 
-The `ofYearDay` creates LocalDate instance from the year and day of year for example March 31st 2015 is the 90th day in 2015 so we can create LocalDate using `LocalDate.ofYearDay(2015, 90)`.
+The `ofYearDay()` creates LocalDate instance from the year and day of year for example March 31st 2015 is the 90th day in 2015 so we can create LocalDate using `LocalDate.ofYearDay(2015, 90)`.
 
 ```java
 LocalDate january_21st = LocalDate.ofYearDay(2015, 21);
@@ -97,7 +97,7 @@ LocalDate march_31st = LocalDate.ofYearDay(2015, 90);
 System.out.println(march_31st); // 2015-03-31
 ```
 
-The `ofEpochDay` creates LocalDate instance using the epoch day count. The starting value of epoch is `1970-01-01`. So, `LocalDate.ofEpochDay(1)` will give `1970-01-02`.
+The `ofEpochDay()` creates LocalDate instance using the epoch day count. The starting value of epoch is `1970-01-01`. So, `LocalDate.ofEpochDay(1)` will give `1970-01-02`.
 
 LocalDate instance provide many accessor methods to access different fields like year, month, dayOfWeek, etc.
 
@@ -112,7 +112,7 @@ public void kalamWasBornOn15October1931() throws Exception {
 }
 ```
 
-You can create current date from the system clock using `now` static factory method.
+You can create current date from the system clock using `now()` static factory method.
 
 ```java
 LocalDate.now()
@@ -128,7 +128,7 @@ public void kalamWasBornAt0115() throws Exception {
 }
 ```
 
-`LocalTime` class is used to work with time. Just like `LocalDate`, it also provides static factory methods for creating its instances. We will use the `of` static factory method giving it hour and minute and it will return LocalTime as shown below.
+`LocalTime` class is used to work with time. Just like `LocalDate`, it also provides static factory methods for creating its instances. We will use the `of()` static factory method giving it hour and minute and it will return LocalTime as shown below.
 
 ```java
 public LocalTime timeOfBirth() {
@@ -136,19 +136,19 @@ public LocalTime timeOfBirth() {
 }
 ```
 
-There are other overloaded variants of `of` method that can take second and nanosecond.
+There are other overloaded variants of `of()` method that can take second and nanosecond.
 
 > LocalTime is represented to nanosecond precision.
 
-You can print the current time of the system clock using `now` method as shown below.
+You can print the current time of the system clock using `now()` method as shown below.
 
 ```java
 LocalTime.now()
 ```
 
-You can also create instances of `LocalTime` from seconds of day or nanosecond of day using `ofSecondOfDay` and `ofNanoOfDay` static factory methods.
+You can also create instances of `LocalTime` from seconds of day or nanosecond of day using `ofSecondOfDay()` and `ofNanoOfDay()` static factory methods.
 
-Similar to `LocalDate` `LocalTime` also provide accessor for its field as shown below.
+Similar to `LocalDate`, `LocalTime` also provides accessor for its fields as shown below.
 
 ```java
 @Test
@@ -162,7 +162,7 @@ public void kalamWasBornAt0115() throws Exception {
 
 ### Kalam was born on 15 October at 01:15 am
 
-When you want to represent both date and time together then you can use `LocalDateTime`. LocalDateTime also provides many static factory methods to create its instances. We can use `of` factory method that takes a `LocalDate` and `LocalTime` and gives `LocalDateTime` instance as shown below.
+When you want to represent both date and time together then you can use `LocalDateTime`. LocalDateTime also provides many static factory methods to create its instances. We can use `of()` factory method that takes a `LocalDate` and `LocalTime` and gives `LocalDateTime` instance as shown below.
 
 ```java
 public LocalDateTime dateOfBirthAndTime() {
@@ -196,7 +196,7 @@ public void kalam50thBirthDayWasOnThursday() throws Exception {
 }
 ```
 
-We can use `dateOfBirth` method that we wrote earlier with `plusYears` on `LocalDate` instance to achieve this as shown below.
+We can use `dateOfBirth` method that we wrote earlier with `plusYears()` on `LocalDate` instance to achieve this as shown below.
 
 ```java
 public DayOfWeek dayOfBirthAtAge(final int age) {
@@ -204,20 +204,20 @@ public DayOfWeek dayOfBirthAtAge(final int age) {
 }
 ```
 
-There are similar `plus*` variants for adding days, months, weeks to the value.
+There are similar `plus*()` variants for adding days, months, weeks to the value.
 
-Similar to `plus` methods there are `minus` methods that allow you minus year, days, months from a `LocalDate` instance.
+Similar to `plus*()` methods there are `minus()` methods that allow you minus year, days, months from a `LocalDate` instance.
 
 ```java
 LocalDate today = LocalDate.now();
 LocalDate yesterday = today.minusDays(1);
 ```
 
-> Just like LocalDate LocalTime and LocalDateTime also provide similar `plus*` and `minus*` methods.
+> Just like LocalDate, LocalTime and LocalDateTime also provide similar `plus*()` and `minus*()` methods.
 
 ### List all Kalam's birthdate DayOfWeek
 
-For this use-case, we will create an infinite stream of `LocalDate` starting from the Kalam's date of birth using the `Stream.iterate` method. `Stream.iterate` method takes a starting value and a function that allows you to work on the initial seed value and return another value. We just incremented the year by 1 and return next year birthdate. Then we transformed `LocalDate` to `DayOfWeek` to get the desired output value. Finally, we limited our result set to the provided limit and collected Stream result into a List.
+For this use-case, we will create an infinite stream of `LocalDate` starting from the Kalam's date of birth using the `Stream.iterate()` method. This method takes a starting value and a function that allows you to work on the initial seed value and return another value. We just incremented the year by 1 and return next year birthdate. Then we transformed `LocalDate` to `DayOfWeek` to get the desired output value. Finally, we limited our result set to the provided limit and collected Stream result into a List.
 
 ```java
 public List<DayOfWeek> allBirthDateDayOfWeeks(int limit) {
@@ -246,7 +246,7 @@ public void kalamLived30601Days() throws Exception {
 }
 ```
 
-To calculate number of days kalam lived we can use `Duration` class. `Duration` has a factory method that takes two  `LocalTime`, or `LocalDateTime` or `Instant` and gives a duration. The duration can then be converted to days, hours, seconds, etc.
+To calculate the number of days kalam lived we can use `Duration` class. `Duration` has a factory method `between()` that takes two  `LocalTime`, or `LocalDateTime` or `Instant` and gives a duration. The duration can then be converted to days, hours, seconds, etc.
 
 ```java
 public Duration kalamLifeDuration() {
@@ -271,7 +271,7 @@ public void kalamLifePeriod() throws Exception {
 }
 ```
 
-We can use `Period` class to calculate number of years, months, and days kalam lived as shown below. Period's `between` method works with `LocalDate` only.
+We can use `Period` class to calculate number of years, months, and days kalam lived as shown below. Period's `between()` method works with `LocalDate` only.
 
 ```java
 public Period kalamLifePeriod() {
@@ -297,7 +297,7 @@ public void kalamDateOfBirthFormattedInIndianDateFormat() throws Exception {
 }
 ```
 
-The `formatDateofBirth` method uses `DateTimeFormatter` `ofPattern` method to create a new formatter using the specified pattern. All the main main date-time classes provide two methods - one for formatting, `format(DateTimeFormatter formatter)`, and one for parsing, `parse(CharSequence text, DateTimeFormatter formatter)`.
+The `formatDateofBirth()` method uses `DateTimeFormatter`'s `ofPattern()` method to create a new formatter using the specified pattern. All the main main date-time classes provide two methods: one for formatting, `format(DateTimeFormatter formatter)`, and one for parsing, `parse(CharSequence text, DateTimeFormatter formatter)`.
 
 ```java
 public String formatDateOfBirth(final String pattern) {
@@ -331,7 +331,7 @@ public void shouldParseKalamDateOfBirthAndTimeToLocalDateTime() throws Exception
 }
 ```
 
-We will again use `DateTimeFormatter` `ofPattern` method to create a new `DateTimeFormatter` and then use the `parse` method of `LocalDateTime` to create a new instance of `LocalDateTime` as shown below.
+We will again use `DateTimeFormatter`'s `ofPattern()` method to create a new `DateTimeFormatter` and then use the `parse()` method of `LocalDateTime` to create a new instance of `LocalDateTime` as shown below.
 
 ```java
 public LocalDateTime parseDateOfBirthAndTime(String input) {
@@ -341,7 +341,7 @@ public LocalDateTime parseDateOfBirthAndTime(String input) {
 
 ## Advance date time manipulation with TemporalAdjusters
 
-In `Manipulating dates` section, we learnt how we can use `plus*` and `minus*` methods to manipulate dates. Those methods are suitable for simple manipulation operations like adding or subtracting days, months, or years. Sometimes, we need to perform advance date time manipulation such as adjusting date to first day of next month or adjusting date to next working day or adjusting date to next public holiday then we can use `TemporalAdjusters` to meet our needs. Java 8 comes bundled with many predefined temporal adjusters for common scenarios. These temporal adjusters are available as static factory methods inside the `TemporalAdjusters` class.
+In the **Manipulating dates** section, we learnt how we can use `plus*()` and `minus*()` methods to manipulate dates. Those methods are suitable for simple manipulation operations like adding or subtracting days, months, or years. Sometimes, we need to perform advance date time manipulation such as adjusting date to first day of next month or adjusting date to next working day or adjusting date to next public holiday then we can use `TemporalAdjusters` to meet our needs. Java 8 comes bundled with many predefined temporal adjusters for common scenarios. These temporal adjusters are available as static factory methods inside the `TemporalAdjusters` class.
 
 ```java
 LocalDate date = LocalDate.of(2015, Month.OCTOBER, 25);
@@ -356,9 +356,9 @@ System.out.println(firstDayOfNextMonth);// This will print 2015-11-01
 LocalDate lastFridayOfMonth = date.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY));
 System.out.println(lastFridayOfMonth); // This will print 2015-10-30
 ```
-* **firstDayOfMonth** creates a new date set to first day of the current month.
-* **firstDayOfNextMonth** creates a new date set to first day of next month.
-* **lastInMonth** creates a new date in the same month with the last matching day-of-week. For example, last Friday in October.
+* `firstDayOfMonth()` creates a new date set to first day of the current month.
+* `firstDayOfNextMonth()` creates a new date set to first day of next month.
+* `lastInMonth()` creates a new date in the same month with the last matching day-of-week. For example, last Friday in October.
 
 I have not covered all the temporal-adjusters please refer to the documentation for the same.
 ![TemporalAdjusters](https://whyjava.files.wordpress.com/2015/10/temporal-adjusters.png)

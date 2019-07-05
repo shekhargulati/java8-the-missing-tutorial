@@ -70,7 +70,7 @@ public void manage() {
 }
 ```
 
-If you have to find all the repeatable annotations on a method then you can use `getAnnotationsByType` method that is now available on `java.lang.Class` and `java.lang.reflect.Method`. To print all the vm names, you can write code as shown below.
+If you have to find all the repeatable annotations on a method then you can use `getAnnotationsByType()` method that is now available on `java.lang.Class` and `java.lang.reflect.Method`. To print all the vm names, you can write code as shown below.
 
 ```java
 CreateVm[] createVms = VmManager.class.getMethod("manage").getAnnotationsByType(CreateVm.class);

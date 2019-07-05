@@ -1,11 +1,11 @@
 Métodos Estáticos y por defecto en Interfaces
 --------
 
-Todos entendemos que deberíamos programar con interfaces. Los interfaces dan al cliente un contrato que deberían usar sin preocuparse en los detalles de la implementación ( p.e. las clases). Por lo tanto, fomentan **[el bajo acoplamiento](https://en.wikipedia.org/wiki/Loose_coupling)**. Diseñar interfaces limpios es uno de los aspectgos más importantos en el diseño de APIs. Uno de los principios SOLID **[Segregación de interfaces](https://en.wikipedia.org/wiki/Interface_segregation_principle)** habla sobre diseñar interfaces específicos para el cliente más pequeños en vez de un interfaz más genérico. El diseño de interfaces es la clave para tener APIs limpios y efectivos para nuestas librerías y aplicaciones.
+Todos entendemos que deberíamos programar con interfaces. Los interfaces dan al cliente un contrato que deberían usar sin preocuparse en los detalles de la implementación (p.e. las clases). Por lo tanto, fomentan **[el bajo acoplamiento](https://en.wikipedia.org/wiki/Loose_coupling)**. Diseñar interfaces limpios es uno de los aspectos más importantes en el diseño de APIs. Uno de los principios SOLID **[Segregación de interfaces](https://en.wikipedia.org/wiki/Interface_segregation_principle)** habla sobre diseñar interfaces específicos para el cliente más pequeños en vez de un interfaz más genérico. El diseño de interfaces es la clave para tener APIs limpios y efectivos para nuestas librerías y aplicaciones.
 
 > El código de esta sección está en [ch01 package](https://github.com/shekhargulati/java8-the-missing-tutorial/tree/master/code/src/main/java/com/shekhargulati/java8_tutorial/ch01).
 
-Si has diseñado algún API, con el tiempo, habrás sentido la necesidad de añadirle nuevos métodos. Una vez que se publica el API se hace imposible añadir métodos a un interfaz sin romper las implementaciones existentes. Para aclarar este punto vamos a suponer que estamos desarrollando un API sencillo de una calculadora `Calculator` que soporta las operaciones de sumar `add`, restar `subtract`, dividir `divide` y multiplicar `multiply`. Podemos escribir el interfaz `Calculator`como se muestra abajo. ***Para hacerlo sencillo usaremos enteros.***
+Si has diseñado algún API, con el tiempo, habrás sentido la necesidad de añadirle nuevos métodos. Una vez que se publica el API se hace imposible añadir métodos a un interfaz sin romper las implementaciones existentes. Para aclarar este punto vamos a suponer que estamos desarrollando un API sencillo de una calculadora `Calculator` que soporta las operaciones de sumar `add`, restar `subtract`, dividir `divide` y multiplicar `multiply`. Podemos escribir el interfaz `Calculator` como se muestra debajo. ***Para hacerlo sencillo usaremos enteros.***
 
 ```java
 public interface Calculator {
@@ -20,7 +20,7 @@ public interface Calculator {
 }
 ```
 
-Para respaldar este interfaz `Calculator` desarrollaste la implementación de `BasicCalculator` como se muestra abajo.
+Para respaldar este interfaz `Calculator` se desarrolló la implementación de `BasicCalculator` como se muestra abajo.
 
 ```java
 public class BasicCalculator implements Calculator {
@@ -52,7 +52,7 @@ public class BasicCalculator implements Calculator {
 
 ## Métodos de Factoría Estáticos
 
-El API calculadora resultó ser muy útil y fácil de usar. Los usuarios sólo tienen que crear una instancia de `BasicCalculator` y ya pueden usar el API. Comienzas a ver código como el que se muestra abajo.
+El API calculadora resultó ser muy útil y fácil de usar. Los usuarios sólo tienen que crear una instancia de `BasicCalculator` y ya pueden usar el API. Basta con usar código como el que se muestra debajo.
 
 ```java
 Calculator calculator = new BasicCalculator();
@@ -72,7 +72,7 @@ class BasicCalculator implements Calculator {
 }
 ```
 
-Luego, escribiremos una clase factoría que nos  facilite la instancia de `Calculator` como se muestra abajo.
+Luego, escribiremos una clase factoría que nos  facilite la instancia de `Calculator` como se muestra debajo.
 
 ```java
 public abstract class CalculatorFactory {
@@ -111,7 +111,7 @@ public interface Calculator {
 
 ## La Evolución del API con el tiempo
 
-Algunos de los consumidores decidieron o bien, ampliar el API `Calculator` añadiendo métodos como resto `remainder`, o escribit su propia implementación del interfaz `Calculator`. Tras hablar con tus usuarios sacaste la conclusión de que a la mayoría de ellos les gustaría tener un método `remainder` en el interfaz `Calculator`. Parecía un cambio muy simple al API por lo que añadiste un método nuevo.
+Algunos de los consumidores decidieron o bien, ampliar el API `Calculator` añadiendo métodos como `remainder`, o escribir su propia implementación del interfaz `Calculator`. Tras hablar con tus usuarios sacaste la conclusión de que a la mayoría de ellos les gustaría tener un método `remainder` en el interfaz `Calculator`. Parecía un cambio muy simple al API por lo que añadiste un método nuevo.
 
 ```java
 public interface Calculator {
@@ -156,7 +156,9 @@ default int remainder(int number, int divisor) {
 
 ## Herencia múltiple
 
-Una clase puede extender sólo una clase pero puede implementar múltiples interfaces. Ahora que es posible tener implementación de métodos en interfaces Java tiene herencia múltiple de comportamiento. Java ya tenía herencia múltiple a nivel de tipo y ahora tambén a nivel de comportamiento. Existen tres reglas de resolución que ayudan a decidir que método será elegido:
+Una clase puede extender sólo una clase pero puede implementar múltiples interfaces. Ahora que es posible tener implementación de métodos en interfaces Java conseguimos herencia múltiple de comportamiento. Java ya tenía herencia múltiple a nivel de tipo con las interfaces y ahora también a nivel de comportamiento. 
+
+Existen tres reglas de resolución que ayudan a decidir que método será elegido:
 
 **Regla 1: Los métodos declarados en las clases tendrán preferencia sobre los definidos en las interfaces.**
 
@@ -167,7 +169,7 @@ interface A {
     }
 }
 
-class App implements A{
+class App implements A {
 
     @Override
     public void doSth() {
@@ -209,7 +211,7 @@ class App implements C, B, A {
 
 Esto imprimirá `Dentro de C`.
 
-**Regla 3: Sino, la clase tiene que llamar explicitamente a la implementación que desea**
+**Regla 3: Si no, la clase tiene que llamar explícitamente a la implementación que desea**
 
 ```java
 interface A {

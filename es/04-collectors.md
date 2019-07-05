@@ -1,17 +1,17 @@
 Collectors
 ------
 
-En el [día 2](https://github.com/malobato/java8-the-missing-tutorial/blob/master/03-streams.md), aprendiste que el API Stream puede ayudarte a trabajar con colecciones de manera declarativa. Observamos el método `collect`, que es una operación terminal que acumula el conjunto de resultados de una tubería de flujo en un `List`. `Collect` es una operación de reducción que reduce un flujo a un valor. El valor podría ser un `Collection`, un `Map` o un objeto valor. Puedes usar `collect` para obtener lo siguiente:
+En el [capítulo 2](https://github.com/malobato/java8-the-missing-tutorial/blob/master/03-streams.md), aprendiste que el API Stream puede ayudarte a trabajar con colecciones de manera declarativa. Observamos el método `collect()`, que es una operación terminal que acumula el conjunto de resultados de una tubería de flujo en un `List`; es una operación de reducción que reduce un flujo a un valor. El valor podría ser un `Collection`, un `Map` o un objeto valor. Puedes usar `collect()` para obtener lo siguiente:
 
-1. **Reducir un flujo a un simple valor:** El resultado de la ejecución del flujo se puede reducir a un simple valor. Un valor simple podría ser un `Collection` o un valor numérico como un int, double, etc o un objeto de valor personalizado.
+1. **Reducir un flujo a un simple valor:** El resultado de la ejecución del flujo se puede reducir a un simple valor. Un valor simple podría ser una `Collection` o un valor numérico como un *int*, *double*, etc o un objeto de valor personalizado.
 
 2. **Agrupar elementos en un flujo:** Agrupar todas las tareas de un flujo por tipo de tarea. El resultado será un `Map<TaskType, List<Task>>` con cada entrada conteniendo el tipo de tarea y sus tareas asociadas. También puedes usar cualquier otra colección en vez de un `List`. Si no necesitas todas las tareas asociadas con un tipo de tarea, también puedes producir `Map<TaskType, Task>`. Un ejemplo podría ser agrupar las tareas por tipo y obtener la primera tarea creada.
 
-3. **Dividir los elementos de un flujo:** Puedes dividir un flujo en dos grupos -- tareas esperadas y completadas.
+3. **Dividir los elementos de un flujo:** Puedes dividir un flujo en dos grupos: tareas esperadas y completadas.
 
 ## Collector en Acción
 
-Para sentir el poder de `Collector` vamos a observar el ejemplo donde tenemos que agrupar tareas por su tipo. En Java 8, podemos conseguir agrupar por tipo de tarea con el siguiente código. **Por favor revisar el [día 2](https://github.com/malobato/java8-the-missing-tutorial/blob/master/02-lambdas.md) del blog donde hablamos sobre el ejemplo que seguimos en esta serie.**
+Para demostrar el poder de `Collector` vamos a observar el ejemplo donde tenemos que agrupar tareas por su tipo. En Java 8, podemos conseguir agrupar por tipo de tarea con el siguiente código. **(Revisar el [capítulo 2](https://github.com/malobato/java8-the-missing-tutorial/blob/master/02-lambdas.md) donde hablamos sobre el ejemplo que seguimos en esta serie).**
 
 ```java
 private static Map<TaskType, List<Task>> groupTasksByType(List<Task> tasks) {
@@ -19,7 +19,7 @@ private static Map<TaskType, List<Task>> groupTasksByType(List<Task> tasks) {
 }
 ```
 
-El código siguiente usa `groupingBy` de `Collector` definido en la clase de utilidad `Collectors`. Crea un mapa con clave `TaskType` y valor una lista que contiene todas las tareas con el mismo `TaskType`. Para conseguir lo mismo en Java 7 habría que escribir el siguiente código.
+El código siguiente usa el método `groupingBy()` de `Collector` definido en la clase de utilidad `Collectors`. Crea un mapa con clave `TaskType` y valor una lista que contiene todas las tareas con el mismo `TaskType`. Para conseguir lo mismo en Java 7 habría que escribir el siguiente código:
 
 ```java
 public static void main(String[] args) {
@@ -43,16 +43,16 @@ public static void main(String[] args) {
 
 ## Collectors: Operaciones de reducción comunes
 
-La clase utilidad `Collectors` proporcinoa un montón de métodos estáticos de utilidad para crear acumuladores para la mayoría de casos de uso comunes como acumular elementos en una colección, agrupar y parciticionar elementos y resumir elementos de acuerdo a varios criterios. Cubriremos la mayoría de casos comunes de `Collector` en este blog.
+La clase utilidad `Collectors` proporciona un montón de métodos estáticos de utilidad para crear **acumuladores** para la mayoría de casos de uso comunes como acumular elementos en una colección, agrupar y particionar elementos, y resumir elementos de acuerdo a varios criterios. Cubriremos la mayoría de casos comunes de `Collector` en este blog.
 
 
 ## Reducir a un simple valor
 
-Como ya vimos, los acumuladores se pueden usar para recoger la salida de un flujo en una colección o generar un valor simple.
+Como ya vimos, los **acumuladores** se pueden usar para recoger la salida de un flujo en una colección o generar un valor simple.
 
 ### Recoger datos en una lista
 
-Vamos a escribir nuestro primer caso de prueba -- dada una lista de tareas queremos recoger sus títulos en una lista.
+Vamos a escribir nuestro primer caso de prueba: dada una lista de tareas queremos recoger sus títulos en una lista.
 
 ```java
 import static java.util.stream.Collectors.toList;
@@ -64,11 +64,11 @@ public class Example2_ReduceValue {
 }
 ```
 
-El acumulador `toList` usa el método de `List` `add` para añadir elementos dentro de la lista resultante. El acumulador `toList` usa un `ArrayList` como implementación de la lista.
+El acumulador `toList()` usa el método `add()` de `List` para añadir elementos dentro de la lista resultante. Usa un `ArrayList` como implementación de la lista.
 
 ### Recoger datos en un conjunto
 
-Si queremos estar seguros de que sólo recogemos títulos únicos y no nos preocupa el orden, podemos usar el acumulador `toSet`.
+Si queremos estar seguros de que sólo recogemos títulos únicos y no nos preocupa el orden, podemos usar el acumulador `toSet()`.
 
 ```java
 import static java.util.stream.Collectors.toSet;
@@ -78,11 +78,11 @@ public Set<String> uniqueTitles(List<Task> tasks) {
 }
 ```
 
-El método `toSet` usa un `HashSet` como implementación del conjunto para guardar el resultado.
+El método `toSet()` usa un `HashSet` como implementación del conjunto para guardar el resultado.
 
 ### Recoger datos en un mapa
 
-Puedes convertir un flujo en un mapa usando el acumulador `toMap`. El acumulador `toMap` toma dos funciones de mapeado para extraer la llave y los valores del mapa. En el código siguiente `Task::getTitle` es una función que toma una tarea y produce una clave con un único título. **task -> task** es una expresión lambda que se devuelve a si misma. P. ej. la tarea en este caso.
+Puedes convertir un flujo en un mapa usando el acumulador `toMap()`. El acumulador `toMap()` toma como parámetros dos funciones de mapeado para extraer la clave y los valores del mapa. En el código siguiente `Task::getTitle` es una función que toma una tarea y produce una clave con un único título. **task -> task** es una expresión lambda que se devuelve a si misma. P. ej. la tarea en este caso.
 
 ```java
 private static Map<String, Task> taskMap(List<Task> tasks) {
@@ -90,7 +90,7 @@ private static Map<String, Task> taskMap(List<Task> tasks) {
 }
 ```
 
-Podemos mejorar el código anterior usando el método por defecto `identity` en el interfaz `Function` para generar código más limpio y que transmita mucho mejor la intención del programador.
+Podemos mejorar el código anterior usando el método por defecto `identity()` en la interfaz `Function` para generar código más limpio y que transmita mucho mejor la intención del programador.
 
 ```java
 import static java.util.function.Function.identity;
@@ -107,7 +107,7 @@ Exception in thread "main" java.lang.IllegalStateException: Duplicate key Task{t
 at java.util.stream.Collectors.lambda$throwingMerger$105(Collectors.java:133)
 ```
 
-Puedes controlar los duplicados usando otra variante de la función `toMap` que nos permite especificar una función de unión. La función de uníón permite al cliente especificar como quiere resolver la colisión entre valores asociados a la misma clave. En el código siguiente, sólo usaremos el último valor pero puedes escribti un algoritmo para resolver la colisión.
+Puedes controlar los duplicados usando otra variante de la función `toMap()` que nos permite especificar una función de unión. La función de unión permite al cliente especificar como quiere resolver la colisión entre valores asociados a la misma clave. En el código siguiente, sólo nos quedamos con el último valor, pero puedes escribir un algoritmo para resolver la colisión.
 
 ```java
 private static Map<String, Task> taskMap_duplicates(List<Task> tasks) {
@@ -115,7 +115,7 @@ private static Map<String, Task> taskMap_duplicates(List<Task> tasks) {
 }
 ```
 
-Puedes usar cualquier otra implementación de mapa usando la tercera variante del método `toMap`. Esto require que especifiques el `Map` `Supplier` que se usará para guardar el resultado.
+Puedes usar cualquier otra implementación de mapa usando la tercera variante del método `toMap()`. Esto require que especifiques el `Map` `Supplier` que se usará para guardar el resultado.
 
 ```
 public Map<String, Task> collectToMap(List<Task> tasks) {
@@ -123,11 +123,11 @@ public Map<String, Task> collectToMap(List<Task> tasks) {
 }
 ```
 
-Similar al acumulador `toMap` también esta el acumulador `ToConcurrentMap` que produce un `ConcurrentMap` en vez de un `HashMap`.
+Similar al acumulador `toMap()` también está el acumulador `toConcurrentMap()` que produce un `ConcurrentMap` en vez de un `HashMap`.
 
 ### Usando otras colecciones
 
-Los acumuladores específicos como `toList` y `toSet` no te permiten especificar la implementación de la lista o del conjunto. Puedes usar el acumulador `toCollection` cuando quieras recoger el resultado en otros tipos de colecciones como se muestra a continuación.
+Los acumuladores específicos como `toList()` y `toSet()` no te permiten especificar la implementación de la lista o del conjunto. Puedes usar el acumulador `toCollection()` cuando quieras recoger el resultado en otros tipos de colecciones como se muestra a continuación.
 
 ```
 private static LinkedHashSet<Task> collectToLinkedHaskSet(List<Task> tasks) {
@@ -165,10 +165,11 @@ Uno de los casos de uso más comunes es agrupar elementos. Vamos a ver varios ej
 
 ### Ejemplo 1: Agrupando tareas por tipo
 
-Vamos a ver el ejemplo mostrado abajo donde queremos agrupar todas las tareas basándonos en su `TaskType`. Puedes realizar esta tarea de una forma muy sencilla usando el acumulador `groupingBy` de la clase de utilidad `Collectors`. Puedes acortarlo más usando referencias a método e importaciones estáticas.
+Vamos a ver el ejemplo mostrado abajo donde queremos agrupar todas las tareas basándonos en su `TaskType`. Puedes realizar esta tarea de una forma muy sencilla usando el acumulador `groupingBy()` de la clase de utilidad `Collectors`. Puedes acortarlo más usando referencias a método e importaciones estáticas.
 
 ```java
 import static java.util.stream.Collectors.groupingBy;
+
 private static Map<TaskType, List<Task>> groupTasksByType(List<Task> tasks) {
        return tasks.stream().collect(groupingBy(Task::getType));
 }
@@ -230,7 +231,7 @@ private static Map<TaskType, Map<LocalDate, List<Task>>> groupTasksByTypeAndCrea
 
 ## Dividiendo en partes
 
-Hay veces en las que quieres partir un conjunto de datos en dos basándote en un predicado. Por ejemplo, podemos partir tareas en dos grupos definiendo una función de reparto que parta las tareas en dos grupos -- uno con fecha de vencimiento anterior a hoy y otro con fecha de vencimiento posterior a hoy.
+Hay veces en las que quieres partir un conjunto de datos en dos basándote en un predicado. Por ejemplo, podemos partir tareas en dos grupos definiendo una función de reparto que parta las tareas en dos grupos: uno con fecha de vencimiento anterior a hoy y otro con fecha de vencimiento posterior a hoy.
 
 ```java
 private static Map<Boolean, List<Task>> partitionOldAndFutureTasks(List<Task> tasks) {
@@ -240,7 +241,7 @@ private static Map<Boolean, List<Task>> partitionOldAndFutureTasks(List<Task> ta
 
 ## Generando estadísticas
 
-Otro grupo de acumuladores que son muy útiles son los acumuladores que producen estadísticas. Estos trabajan con tipos de datos elementales como int, double, long y pueden usarse para generar estadísticar como la que se muestra a continuación.
+Otro grupo de acumuladores que son muy útiles son los acumuladores que producen estadísticas. Estos trabajan con tipos de datos elementales como int, double, long y pueden usarse para generar estadísticas como la que se muestra a continuación.
 
 ```java
 IntSummaryStatistics summaryStatistics = tasks.stream().map(Task::getTitle).collect(summarizingInt(String::length));
