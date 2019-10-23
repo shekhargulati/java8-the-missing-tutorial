@@ -5,7 +5,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 
 public class CompletableFutureExample {
-
     public static void main(String[] args) {
         CompletableFuture.completedFuture("hello");
         CompletableFuture.runAsync(() -> System.out.println("hello"));

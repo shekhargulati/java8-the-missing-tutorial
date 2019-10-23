@@ -9,7 +9,6 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 public class Examples {
-
     public List<String> allReadingTasks(List<Task> tasks) {
         return tasks.stream().
                 filter(task -> task.getType() == TaskType.READING).
@@ -18,7 +17,6 @@ public class Examples {
                 collect(toList());
 
     }
-
 
     public List<String> allReadingTasksSortedByCreatedOnDesc(List<Task> tasks) {
         return tasks.stream().
@@ -70,5 +68,4 @@ public class Examples {
                 reduce((first, second) -> first + " *** " + second).
                 get();
     }
-
 }

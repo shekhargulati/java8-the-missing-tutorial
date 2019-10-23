@@ -6,14 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Example1_Lambda {
-
     public static void main(String[] args) {
         List<String> names = Arrays.asList("shekhar", "rahul", "sameer");
+
         // sort alphabetically
         Collections.sort(names);
         System.out.println("names sorted alphabetically  >>");
-        System.out.println(names);
-        System.out.println();
+        System.out.println(names + "\n");
 
         // using anonymous classes
         Collections.sort(names, new Comparator<String>() {
@@ -22,9 +21,9 @@ public class Example1_Lambda {
                 return o1.length() - o2.length();
             }
         });
+
         System.out.println("names sorted by length  >>");
-        System.out.println(names);
-        System.out.println();
+        System.out.println(names + "\n");
 
         /**
          * Using lambda
@@ -34,12 +33,8 @@ public class Example1_Lambda {
          * 3. Multiple lines
          * 4. Type inference
          */
-
         Collections.sort(names, (String first, String second) -> second.length() - first.length());
         System.out.println("names sorted by length(reversed)  >>");
         System.out.println(names);
-        System.out.println();
     }
-
-
 }

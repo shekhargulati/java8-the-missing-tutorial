@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toMap;
 
 public class NashornExample2 {
-
     public static void main(String[] args) throws ScriptException {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine nashorn = manager.getEngineByName("nashorn");

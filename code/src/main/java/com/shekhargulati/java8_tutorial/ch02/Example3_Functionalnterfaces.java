@@ -7,7 +7,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Example3_Functionalnterfaces {
-
     public static void main(String[] args) {
 
         Predicate<String> nameStartWithS = name -> name.startsWith("s");

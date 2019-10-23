@@ -12,9 +12,7 @@ import java.util.List;
 public @interface MyAnnotation {
 }
 
-
 class MyAnnotationUsage<@MyAnnotation T> {
-
     public static void main(String[] args) {
 
     }
@@ -22,5 +20,4 @@ class MyAnnotationUsage<@MyAnnotation T> {
     public static void doSth() {
         List<@MyAnnotation String> names = Arrays.asList("shekhar");
     }
-
 }

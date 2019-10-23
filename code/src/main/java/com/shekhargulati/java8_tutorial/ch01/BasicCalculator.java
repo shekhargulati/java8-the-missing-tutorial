@@ -1,8 +1,6 @@
 package com.shekhargulati.java8_tutorial.ch01;
 
-
 class BasicCalculator implements Calculator {
-
     @Override
     public int add(int first, int second) {
         return first + second;

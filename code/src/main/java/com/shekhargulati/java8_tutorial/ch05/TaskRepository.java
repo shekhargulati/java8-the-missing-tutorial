@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class TaskRepository {
-
     private final Map<String, Task> db = new HashMap<>();
 
     public void loadData() {

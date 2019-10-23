@@ -9,7 +9,6 @@ import java.util.function.Function;
 import static java.util.Comparator.comparingInt;
 
 public class Example4_MethodReferences {
-
     public static void main(String[] args) {
         List<String> names = Arrays.asList("shekhar", "rahul", "sameer");
 

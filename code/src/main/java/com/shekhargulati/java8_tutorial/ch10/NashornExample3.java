@@ -7,7 +7,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
 public class NashornExample3 {
-
     public static void main(String[] args) throws ScriptException {
         NashornScriptEngineFactory factory = new NashornScriptEngineFactory();
         ScriptEngine nashorn = factory.getScriptEngine(new NoJavaFilter());
@@ -16,7 +15,6 @@ public class NashornExample3 {
     }
 
     private static class NoJavaFilter implements ClassFilter{
-
         @Override
         public boolean exposeToScripts(String s) {
             return false;

@@ -9,9 +9,7 @@ import java.util.stream.Collectors;
 
 import static com.shekhargulati.java8_tutorial.utils.DataUtils.getTasks;
 
-
 public class Example1_Stream {
-
     public static void main(String[] args) {
         List<Task> tasks = getTasks();
 

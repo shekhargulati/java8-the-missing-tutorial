@@ -3,7 +3,6 @@ package com.shekhargulati.java8_tutorial.ch05.domain;
 import java.util.Optional;
 
 public class User {
-
     private final String username;
     private final Optional<String> address;
 

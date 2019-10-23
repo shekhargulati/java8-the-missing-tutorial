@@ -17,8 +17,3 @@ interface D extends B {
         System.out.println("inside D");
     }
 }
-
-
-
-
-

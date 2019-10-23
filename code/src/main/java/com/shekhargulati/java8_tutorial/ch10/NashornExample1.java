@@ -5,7 +5,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 public class NashornExample1 {
-
     public static void main(String[] args) throws ScriptException {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine nashorn = manager.getEngineByName("nashorn");

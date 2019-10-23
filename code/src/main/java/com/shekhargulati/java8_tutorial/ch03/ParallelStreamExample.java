@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.groupingBy;
 
 public class ParallelStreamExample {
-
     public static void main(String[] args) {
         Map<String, List<Integer>> numbersPerThread = IntStream.rangeClosed(1, 160)
                 .parallel()

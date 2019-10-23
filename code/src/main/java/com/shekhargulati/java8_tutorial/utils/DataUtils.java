@@ -15,9 +15,7 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
-
 public class DataUtils {
-
     public static Stream<String> lines() {
         return filePathToStream("src/main/resources/book.txt");
     }
